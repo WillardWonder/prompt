@@ -1,0 +1,973 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>High-Impact Prompting with ChatGPT</title>
+<meta name="description" content="A hands-on workshop on directing ChatGPT toward the outcome you actually want.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#EDF0F3;
+  --surface:#FFFFFF;
+  --ink:#16212C;
+  --muted:#596877;
+  --line:#CBD3DC;
+  --route:#2B4ACB;
+  --route-soft:#E3E8FA;
+  --drift:#C98A0B;
+  --drift-soft:#FBF0D6;
+  --ok:#2F7D5B;
+  --display:"Bricolage Grotesque",system-ui,sans-serif;
+  --serif:"Source Serif 4",Georgia,serif;
+  --mono:"IBM Plex Mono",ui-monospace,Menlo,monospace;
+  --rail:248px;
+  --col:700px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:24px}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:19px;line-height:1.62;-webkit-font-smoothing:antialiased}
+a{color:var(--route)}
+:focus-visible{outline:3px solid var(--route);outline-offset:3px;border-radius:4px}
+h1,h2,h3,h4{font-family:var(--display);line-height:1.08;margin:0;font-weight:700;letter-spacing:-.015em}
+p{margin:0 0 1em}
+button,input,textarea,select{font:inherit;color:inherit}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* ---------- hero ---------- */
+.hero{padding:48px 6vw 56px;max-width:1280px;margin:0 auto;display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:center}
+.hero .meta{font-family:var(--display);font-size:15px;color:var(--muted);margin-bottom:48px;display:flex;gap:6px 22px;flex-wrap:wrap}
+.hero .meta b{color:var(--ink);font-weight:600}
+.hero h1{font-size:clamp(42px,5.2vw,78px);font-weight:800;letter-spacing:-.035em;line-height:.96}
+.hero h1 .quiet{display:block;color:var(--muted);font-weight:500}
+.hero .lede{font-size:21px;max-width:34em;margin:28px 0 30px;color:#2B3946}
+.hero .ctas{display:flex;gap:12px;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-weight:600;font-size:16px;padding:12px 20px;border-radius:999px;border:1.5px solid var(--ink);background:var(--ink);color:#fff;text-decoration:none;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink)}
+.btn.small{font-size:14px;padding:7px 14px}
+.btn:hover{background:var(--route);border-color:var(--route);color:#fff}
+.routeArt{width:100%;height:auto;overflow:visible}
+.routeArt .road{fill:none;stroke:var(--line);stroke-width:2;stroke-dasharray:2 7;stroke-linecap:round}
+.routeArt .path{fill:none;stroke:var(--route);stroke-width:4;stroke-linecap:round;stroke-linejoin:round}
+.routeArt .detour{fill:none;stroke:var(--drift);stroke-width:4;stroke-linecap:round;stroke-dasharray:1 9}
+.routeArt text{font-family:var(--display);font-size:15px;fill:var(--muted)}
+.routeArt .pinLabel{fill:var(--ink);font-weight:600}
+.draw{stroke-dasharray:var(--len);stroke-dashoffset:var(--len);animation:draw 2.6s cubic-bezier(.6,.05,.3,1) .3s forwards}
+.fadeIn{opacity:0;animation:fade .5s ease 2.6s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fade{to{opacity:1}}
+
+/* ---------- layout ---------- */
+.shell{max-width:1280px;margin:0 auto;padding:0 6vw 120px;display:grid;grid-template-columns:var(--rail) minmax(0,var(--col));gap:72px}
+.rail{position:sticky;top:24px;align-self:start;max-height:calc(100vh - 48px);overflow:auto;padding:8px 0 24px}
+.rail ol{list-style:none;margin:0;padding:0;position:relative}
+.rail ol::before{content:"";position:absolute;left:11px;top:14px;bottom:14px;width:2px;background:var(--line)}
+.rail li a{display:grid;grid-template-columns:24px 1fr auto;gap:12px;align-items:center;padding:7px 0;text-decoration:none;color:var(--muted);font-family:var(--display);font-size:15.5px;line-height:1.2;position:relative}
+.rail .dot{width:24px;height:24px;border-radius:50%;background:var(--paper);border:2px solid var(--line);display:grid;place-items:center;font-size:11px;font-weight:700;color:var(--muted);z-index:1}
+.rail .min{font-size:12.5px;color:#8794A1}
+.rail li a:hover{color:var(--ink)}
+.rail li a.active{color:var(--ink);font-weight:600}
+.rail li a.active .dot{border-color:var(--route);color:var(--route);background:#fff}
+.rail li a.done .dot{background:var(--route);border-color:var(--route);color:#fff}
+.rail li.brk a .dot{border-style:dashed}
+.rail .end .dot{border-radius:50% 50% 50% 0;transform:rotate(-45deg)}
+.rail .end .dot span{transform:rotate(45deg)}
+.rail .tools{margin-top:22px;padding-top:18px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:8px;font-family:var(--display);font-size:15px}
+.rail .tools a{color:var(--ink);text-decoration:none}
+.rail .tools a:hover{color:var(--route)}
+
+main section{padding:72px 0 8px;border-top:1px solid var(--line)}
+main section:first-child{border-top:0;padding-top:24px}
+.stopHead{display:flex;align-items:baseline;gap:18px;margin-bottom:22px}
+.stopNum{font-family:var(--display);font-weight:800;font-size:15px;color:var(--route);min-width:28px}
+.stopHead h2{font-size:clamp(34px,4vw,48px);font-weight:700;letter-spacing:-.03em}
+.time{font-family:var(--display);font-size:14px;color:var(--muted);margin:-8px 0 24px 46px}
+.body{margin-left:46px}
+.principle{font-family:var(--display);font-size:clamp(24px,2.7vw,31px);font-weight:600;letter-spacing:-.02em;line-height:1.18;margin:36px 0 30px;padding-left:22px;border-left:4px solid var(--route);max-width:22em}
+.principle.drift{border-color:var(--drift)}
+
+/* ---------- exercises ---------- */
+.try{background:var(--surface);border-radius:14px;padding:28px 30px 26px;margin:28px 0;box-shadow:0 1px 0 var(--line),0 12px 32px -22px rgba(22,33,44,.35)}
+.try h3{font-size:23px;margin-bottom:14px}
+.try ol.steps{padding-left:1.2em;margin:0 0 1em}
+.try ol.steps li{margin-bottom:.45em;padding-left:.25em}
+.ask{margin:24px 0 0;padding:18px 0 0;border-top:1px dashed var(--line)}
+.ask h4{font-size:17px;margin-bottom:8px}
+.ask ul{margin:0;padding-left:1.1em}
+.ask li{margin-bottom:.3em}
+
+.prompt{position:relative;margin:14px 0 18px;background:#F4F6FA;border:1px solid #DCE2EA;border-radius:10px;padding:16px 92px 16px 18px;font-family:var(--mono);font-size:15.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word}
+.prompt .copy{position:absolute;top:10px;right:10px}
+.copy{font-family:var(--display);font-weight:600;font-size:13.5px;padding:6px 13px;border-radius:999px;border:1.5px solid var(--ink);background:#fff;cursor:pointer}
+.copy:hover{background:var(--ink);color:#fff}
+.copy.ok{background:var(--ok);border-color:var(--ok);color:#fff}
+
+label.f{display:block;font-family:var(--display);font-weight:600;font-size:15px;margin:16px 0 6px}
+.hint{font-family:var(--display);font-size:14px;color:var(--muted);font-weight:400}
+input[type=text],textarea{width:100%;background:#F8F9FB;border:1.5px solid #D3DAE2;border-radius:9px;padding:11px 13px;font-family:var(--serif);font-size:17px;line-height:1.45}
+textarea{min-height:76px;resize:vertical}
+input[type=text]:focus,textarea:focus{outline:none;border-color:var(--route);background:#fff}
+
+/* decision tally */
+.tally{display:grid;gap:0;margin:8px 0 6px}
+.tally .row{display:grid;grid-template-columns:1fr auto;align-items:center;gap:12px;padding:9px 0;border-bottom:1px solid #E6EAEF;font-family:var(--display);font-size:16px}
+.seg{display:inline-flex;border:1.5px solid var(--line);border-radius:999px;overflow:hidden}
+.seg button{border:0;background:transparent;padding:5px 14px;font-family:var(--display);font-size:14px;font-weight:600;cursor:pointer;color:var(--muted)}
+.seg button[aria-pressed=true]{background:var(--ink);color:#fff}
+.seg button.me[aria-pressed=true]{background:var(--route)}
+.score{font-family:var(--display);font-size:20px;font-weight:700;margin-top:16px}
+.score span{color:var(--route)}
+
+/* purpose cards */
+.choices{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:10px 0 6px}
+.choice{text-align:left;border:1.5px solid var(--line);background:#fff;border-radius:12px;padding:14px 16px;cursor:pointer;font-family:var(--display)}
+.choice b{display:block;font-size:16.5px}
+.choice small{color:var(--muted);font-size:14px}
+.choice[aria-pressed=true]{border-color:var(--route);background:var(--route-soft)}
+
+/* drift log */
+.log{width:100%;border-collapse:collapse;margin:8px 0 4px;font-family:var(--display);font-size:15px}
+.log th{text-align:left;font-weight:600;color:var(--muted);padding:6px 8px 6px 0;font-size:13.5px}
+.log td{padding:5px 8px 5px 0;vertical-align:top}
+.log td:first-child{font-weight:700;width:34px;padding-top:15px;color:var(--drift)}
+.log input{font-size:15.5px;padding:8px 10px}
+.edits{display:flex;flex-wrap:wrap;gap:8px;margin:8px 0 16px}
+.chip{font-family:var(--display);font-size:14px;border:1.5px solid var(--line);border-radius:999px;padding:6px 12px;background:#fff;cursor:pointer}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-pressed=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+
+.signs{list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:1fr 1fr;gap:10px 22px}
+.signs li{padding-left:24px;position:relative;font-size:17.5px}
+.signs li::before{content:"";position:absolute;left:0;top:.55em;width:11px;height:11px;border-radius:50%;border:2.5px solid var(--drift)}
+
+.callout{background:var(--drift-soft);border-radius:12px;padding:18px 22px;margin:22px 0;font-size:17.5px}
+.callout b{font-family:var(--display)}
+
+.sentence{font-family:var(--display);font-size:24px;font-weight:600;line-height:1.35;margin:18px 0 4px;padding:18px 20px;border-radius:12px;background:var(--route-soft);color:var(--ink)}
+.sentence .blank{color:var(--route);border-bottom:2px solid var(--route)}
+.compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:16px 0}
+.compare div{border-radius:12px;padding:14px 16px;font-size:17px}
+.compare .weak{background:#F1F2F4}
+.compare .strong{background:var(--route-soft)}
+.compare b{display:block;font-family:var(--display);font-size:14px;margin-bottom:4px}
+
+.memo{background:#FBFBF8;border:1px solid #E1E3DC;border-radius:10px;padding:20px 22px;font-size:16.5px;line-height:1.55;margin:12px 0}
+.memo .mh{font-family:var(--display);font-size:14px;color:var(--muted);margin-bottom:10px}
+
+.ctxList{display:grid;gap:4px;margin-top:8px}
+.ctx{border-bottom:1px solid #E6EAEF;padding:8px 0}
+.ctx label{display:flex;gap:12px;align-items:flex-start;font-family:var(--display);font-size:16.5px;cursor:pointer}
+.ctx label small{display:block;color:var(--muted);font-size:14px;font-weight:400}
+.ctx input[type=checkbox]{width:20px;height:20px;margin-top:3px;accent-color:var(--route);flex:none}
+.ctx textarea{margin:8px 0 4px 32px;width:calc(100% - 32px);min-height:56px;display:none}
+.ctx.on textarea{display:block}
+
+/* cascade */
+.chat{display:flex;flex-direction:column;gap:12px;margin:18px 0}
+.turn{max-width:88%;padding:13px 17px;border-radius:16px;font-size:16.5px;line-height:1.5}
+.turn.you{align-self:flex-end;background:var(--ink);color:#fff;border-bottom-right-radius:4px}
+.turn.ai{align-self:flex-start;background:#F1F3F6;border-bottom-left-radius:4px}
+.turn.ai.drifted{background:var(--drift-soft);outline:2px solid var(--drift)}
+.turn .who{display:block;font-family:var(--display);font-size:12.5px;font-weight:600;opacity:.65;margin-bottom:2px}
+.turn.new{animation:pop .35s ease}
+@keyframes pop{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+.move{font-family:var(--display);font-size:15px;padding:12px 16px;border-left:3px solid var(--route);background:var(--route-soft);border-radius:0 10px 10px 0;margin:4px 0}
+.move.warn{border-color:var(--drift);background:var(--drift-soft)}
+.move b{display:block;font-size:16px}
+.stepper{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:10px}
+.stepper .count{font-family:var(--display);font-size:14px;color:var(--muted);margin-left:auto}
+
+.phrases{list-style:none;padding:0;margin:8px 0}
+.phrases li{display:grid;grid-template-columns:28px 1fr auto;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid #E6EAEF;font-family:var(--display);font-size:17px}
+.phrases input{width:19px;height:19px;accent-color:var(--route)}
+.phrases small{display:block;color:var(--muted);font-size:13.5px;font-weight:400}
+
+/* workflow */
+.chain{display:flex;flex-wrap:wrap;gap:6px;align-items:center;font-family:var(--display);font-size:15px;margin:14px 0 4px}
+.chain span{padding:6px 12px;border-radius:999px;background:#fff;border:1.5px solid var(--line)}
+.chain i{font-style:normal;color:var(--muted)}
+.stages{display:flex;flex-direction:column;gap:12px;margin:14px 0}
+.stage{border:1.5px solid var(--line);border-radius:12px;padding:12px 14px 14px;background:#FAFBFC;position:relative}
+.stage .top{display:flex;gap:10px;align-items:center}
+.stage .n{font-family:var(--display);font-weight:800;color:var(--route);width:22px}
+.stage .top input{font-family:var(--display);font-weight:600;font-size:17px}
+.stage .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:8px}
+.stage .grid3 label{font-family:var(--display);font-size:12.5px;color:var(--muted);display:block;margin-bottom:3px}
+.stage .grid3 textarea{min-height:58px;font-size:15px;padding:8px 10px}
+.x{border:0;background:transparent;font-size:22px;line-height:1;color:var(--muted);cursor:pointer;padding:2px 6px}
+.x:hover{color:var(--ink)}
+.finishLine{font-family:var(--display);font-weight:600;padding:12px 16px;border-radius:12px;background:var(--ink);color:#fff;margin-top:6px}
+.finishLine small{display:block;font-weight:400;opacity:.7;font-size:13px}
+
+.caps{width:100%;border-collapse:collapse;font-size:16.5px;margin:10px 0}
+.caps td{padding:10px 10px 10px 0;border-bottom:1px solid #E6EAEF;vertical-align:top}
+.caps td:first-child{font-family:var(--display);font-weight:600;width:28%}
+
+.check{list-style:none;padding:0;margin:10px 0}
+.check li{padding:7px 0 7px 30px;position:relative}
+.check li::before{content:"";position:absolute;left:2px;top:.75em;width:14px;height:14px;border:2px solid var(--ink);border-radius:4px}
+
+.model{display:flex;flex-wrap:wrap;gap:0;margin:26px 0;font-family:var(--display);font-weight:700;font-size:clamp(17px,2vw,21px)}
+.model span{padding:12px 0}
+.model span:not(:last-child)::after{content:"";display:inline-block;width:26px;height:2px;background:var(--route);vertical-align:middle;margin:0 10px}
+
+.doneBar{margin:34px 0 0;display:flex;gap:12px;align-items:center}
+.doneBar .btn[aria-pressed=true]{background:var(--ok);border-color:var(--ok)}
+
+.pause{background:var(--ink);color:#fff;border-radius:16px;padding:40px 36px;margin:40px 0}
+.pause h2{font-size:40px;margin-bottom:10px}
+.pause p{font-size:20px;opacity:.85;max-width:30em}
+
+.north{font-family:var(--display);font-size:clamp(26px,3vw,36px);font-weight:600;letter-spacing:-.02em;line-height:1.2;margin:40px 0 14px}
+
+/* ---------- my task drawer ---------- */
+.taskBtn{position:fixed;right:22px;bottom:22px;z-index:40;display:flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:16px;padding:13px 20px;border-radius:999px;border:0;background:var(--route);color:#fff;cursor:pointer;box-shadow:0 14px 30px -12px rgba(43,74,203,.7)}
+.taskBtn .meter{width:46px;height:6px;border-radius:9px;background:rgba(255,255,255,.3);overflow:hidden}
+.taskBtn .meter i{display:block;height:100%;background:#fff;width:0;transition:width .4s}
+.drawer{position:fixed;top:0;right:0;height:100%;width:min(460px,100%);background:#fff;z-index:50;transform:translateX(102%);visibility:hidden;transition:transform .3s cubic-bezier(.3,.7,.2,1),visibility 0s linear .3s;box-shadow:-30px 0 60px -30px rgba(22,33,44,.45);display:flex;flex-direction:column}
+.drawer.open{transform:none;visibility:visible;transition:transform .3s cubic-bezier(.3,.7,.2,1)}
+.drawer header{padding:22px 24px 16px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between}
+.drawer header h2{font-size:26px}
+.drawer .scroll{overflow:auto;padding:8px 24px 24px;flex:1}
+.drawer footer{padding:14px 24px;border-top:1px solid var(--line);display:flex;gap:10px;flex-wrap:wrap}
+.sum h4{font-size:14px;color:var(--muted);font-weight:600;margin:18px 0 4px}
+.sum p,.sum li{font-size:16.5px;margin:0}
+.sum ul{margin:0;padding-left:1.1em}
+.sum .empty{color:#9AA5B1;font-style:italic}
+.scrim{position:fixed;inset:0;background:rgba(22,33,44,.35);z-index:45;opacity:0;pointer-events:none;transition:opacity .3s}
+.scrim.on{opacity:1;pointer-events:auto}
+
+.toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,120px);background:var(--ink);color:#fff;font-family:var(--display);font-size:15px;padding:10px 18px;border-radius:999px;z-index:60;transition:transform .3s}
+.toast.on{transform:translate(-50%,0)}
+
+footer.site{border-top:1px solid var(--line);padding:30px 6vw 100px;font-family:var(--display);font-size:14px;color:var(--muted);max-width:1280px;margin:0 auto}
+
+#printPlan{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1060px){
+  .shell{grid-template-columns:1fr;gap:0}
+  .rail{position:sticky;top:0;z-index:30;background:rgba(237,240,243,.94);backdrop-filter:blur(8px);margin:0 -6vw;padding:10px 6vw;max-height:none;overflow-x:auto;overflow-y:hidden;border-bottom:1px solid var(--line)}
+  .rail ol{display:flex;gap:6px;width:max-content}
+  .rail ol::before{display:none}
+  .rail li a{display:flex;gap:6px;padding:4px 10px 4px 4px;border-radius:999px;font-size:14px;white-space:nowrap}
+  .rail .min,.rail .tools{display:none}
+  .rail .dot{width:22px;height:22px}
+  html{scroll-padding-top:70px}
+}
+@media (max-width:820px){
+  .hero{grid-template-columns:1fr;padding-top:32px}
+  .hero .meta{margin-bottom:32px}
+  .routeArt{max-width:440px}
+  body{font-size:18px}
+  .body{margin-left:0}
+  .time{margin-left:0}
+  .try{padding:22px 18px;margin-left:-4px;margin-right:-4px}
+  .choices,.compare,.signs{grid-template-columns:1fr}
+  .stage .grid3{grid-template-columns:1fr}
+  .prompt{padding:46px 14px 14px}
+  .turn{max-width:96%}
+  .taskBtn{right:14px;bottom:14px}
+}
+
+/* ---------- print: my plan only ---------- */
+@media print{
+  @page{margin:16mm}
+  body{background:#fff;font-size:12pt}
+  body>*:not(#printPlan){display:none!important}
+  #printPlan{display:block}
+  #printPlan h1{font-size:24pt;margin-bottom:4pt}
+  #printPlan h2{font-size:13pt;margin:16pt 0 4pt;color:var(--route)}
+  #printPlan p,#printPlan li{font-size:11.5pt;margin:0 0 3pt}
+  #printPlan .pp-meta{font-family:var(--display);color:#555;font-size:10pt;margin-bottom:12pt}
+  #printPlan .pp-prompt{font-family:var(--mono);font-size:9.5pt;white-space:pre-wrap;border:1px solid #ccc;padding:8pt;border-radius:4pt}
+  #printPlan table{border-collapse:collapse;width:100%;font-size:10pt}
+  #printPlan td,#printPlan th{border:1px solid #ccc;padding:4pt;text-align:left;vertical-align:top}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div>
+    <div class="meta"><span><b>High-Impact Prompting with ChatGPT</b></span><span>WTPD workshop</span><span>Tuesday, November 10, 2026</span><span>Room A107</span></div>
+    <h1>You don't need to know the route.<span class="quiet">You do need to know where you're going.</span></h1>
+    <p class="lede">Two hands-on hours on getting ChatGPT to the outcome you actually want: by owning the destination, keeping the decisions that matter, and steering when it wanders.</p>
+    <div class="ctas">
+      <a class="btn" href="#start">Start the workshop</a>
+      <a class="btn ghost" href="handout.html">Open the handout</a>
+    </div>
+  </div>
+  <svg class="routeArt" viewBox="0 0 440 330" role="img" aria-label="A route from start to destination that wanders off course and is steered back">
+    <path class="road" d="M30 290 C 120 280, 150 210, 210 190 S 330 120, 400 50"/>
+    <path class="path draw" style="--len:640" d="M30 290 C 110 282, 140 230, 190 205 C 240 180, 250 250, 300 268 C 345 284, 360 215, 330 170 C 305 132, 360 80, 400 50"/>
+    <path class="detour fadeIn" d="M250 236 C 290 262, 340 300, 410 300"/>
+    <circle cx="30" cy="290" r="8" fill="#16212C"/>
+    <text x="30" y="318" text-anchor="middle">You</text>
+    <g class="fadeIn">
+      <text x="414" y="322" text-anchor="end" fill="#C98A0B">where it wanted to go</text>
+      <path d="M400 50 c0 -15 -11 -24 -20 -24 s-20 9 -20 24 c0 14 20 32 20 32 s20 -18 20 -32z" transform="translate(20 -8)" fill="#2B4ACB"/>
+      <circle cx="400" cy="16" r="6" fill="#fff"/>
+      <text class="pinLabel" x="355" y="80" text-anchor="end">Where you meant to go</text>
+    </g>
+  </svg>
+</header>
+
+<div class="shell">
+  <nav class="rail" aria-label="Workshop path">
+    <ol>
+      <li><a href="#start"><span class="dot">0</span><span>Before we start</span><span class="min">3 min</span></a></li>
+      <li><a href="#fruit"><span class="dot">1</span><span>A bowl of fruit</span><span class="min">10</span></a></li>
+      <li><a href="#purpose"><span class="dot">2</span><span>Give it a purpose</span><span class="min">8</span></a></li>
+      <li><a href="#drift"><span class="dot">3</span><span>Five small edits</span><span class="min">12</span></a></li>
+      <li><a href="#fresh"><span class="dot">4</span><span>Start fresh</span><span class="min">5</span></a></li>
+      <li><a href="#destination"><span class="dot">5</span><span>Know the destination</span><span class="min">10</span></a></li>
+      <li><a href="#context"><span class="dot">6</span><span>Context</span><span class="min">15</span></a></li>
+      <li class="brk"><a href="#break"><span class="dot">&nbsp;</span><span>Break</span><span class="min">10</span></a></li>
+      <li><a href="#cascade"><span class="dot">7</span><span>Steer the conversation</span><span class="min">15</span></a></li>
+      <li><a href="#workflow"><span class="dot">8</span><span>Start at the end</span><span class="min">12</span></a></li>
+      <li><a href="#build"><span class="dot">9</span><span>Build something real</span><span class="min">15</span></a></li>
+      <li class="end"><a href="#teach"><span class="dot"><span>10</span></span><span>Teach it back</span><span class="min">5</span></a></li>
+    </ol>
+    <div class="tools">
+      <a href="#" data-open-task>Open my task</a>
+      <a href="#steering">Steering phrases</a>
+      <a href="handout.html">Handout</a>
+    </div>
+  </nav>
+
+  <main>
+
+<!-- 0 -->
+<section id="start">
+  <div class="stopHead"><span class="stopNum">0</span><h2>Before we start.</h2></div>
+  <div class="body">
+    <p>Open ChatGPT in a browser tab and keep this page open next to it. You'll go back and forth between them all morning.</p>
+    <p>Everything you type on this page stays in your browser. Nothing is sent anywhere. Your answers build up into <a href="#" data-open-task>My task</a>, a one-page plan you can print or save as a PDF at the end.</p>
+    <div class="callout"><b>One rule for today.</b> Don't paste anything confidential into ChatGPT: personal information, student or customer records, passwords, or anything your employer wouldn't want outside the building. If your real task involves that kind of material, describe it instead of pasting it, or use the practice company in section 6.</div>
+    <p>No ChatGPT account, or you've hit the image limit? Pair up with a neighbor for the image exercises. Everything after section 4 works on any AI chat tool, including Copilot and Claude.</p>
+  </div>
+</section>
+
+<!-- 1 -->
+<section id="fruit">
+  <div class="stopHead"><span class="stopNum">1</span><h2>A bowl of fruit.</h2></div>
+  <p class="time">10 minutes. Do this before we talk about anything.</p>
+  <div class="body">
+    <div class="try">
+      <h3>Try it</h3>
+      <ol class="steps">
+        <li>Start a new chat in ChatGPT.</li>
+        <li>Type exactly this. Don't add a word.</li>
+      </ol>
+      <div class="prompt" data-prompt>Create an image of a bowl of fruit.<button class="copy" type="button">Copy</button></div>
+      <ol class="steps" start="3">
+        <li>Compare yours with the people around you. Then look around the room.</li>
+        <li>For each choice below, mark who actually made it.</li>
+      </ol>
+      <div class="tally" id="tally"></div>
+      <p class="score" id="tallyScore">You made <span>0</span> of 8 decisions.</p>
+      <div class="ask">
+        <h4>Talk about it</h4>
+        <ul>
+          <li>Which of those decisions actually mattered to you?</li>
+          <li>The images aren't identical. Are they really different, or just versions of the same safe default?</li>
+          <li>What happens when millions of people let the same system make the same choices?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="principle">AI fills in what you leave blank. Leave everything blank and you get a competent result that looks like everyone else's.</p>
+    <div class="doneBar"><button class="btn small ghost" data-done="fruit" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 2 -->
+<section id="purpose">
+  <div class="stopHead"><span class="stopNum">2</span><h2>Give it a purpose.</h2></div>
+  <p class="time">8 minutes</p>
+  <div class="body">
+    <p>The fix is not "add more words." It's deciding what the image is <em>for</em>, then keeping only the two or three choices that purpose actually depends on.</p>
+    <div class="try">
+      <h3>Try it</h3>
+      <p>Pick a purpose. Then fill in no more than three decisions that matter for it, and leave the rest to the AI on purpose.</p>
+      <div class="choices" id="purposes"></div>
+      <label class="f" for="pd1">Decision 1</label>
+      <input type="text" id="pd1" data-k="pd1" placeholder="">
+      <label class="f" for="pd2">Decision 2</label>
+      <input type="text" id="pd2" data-k="pd2" placeholder="">
+      <label class="f" for="pd3">Decision 3 <span class="hint">optional</span></label>
+      <input type="text" id="pd3" data-k="pd3" placeholder="">
+      <label class="f">Your prompt</label>
+      <div class="prompt" id="purposePrompt"><span></span><button class="copy" type="button">Copy</button></div>
+      <p>Run it in the <b>same chat</b> as your first bowl. You'll keep editing this image in the next section.</p>
+      <div class="ask">
+        <h4>Talk about it</h4>
+        <ul>
+          <li>Compare with someone who picked a different purpose. How much did three choices change?</li>
+          <li>Which choice did the most work? Which one could you have left out?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="principle">Specificity beats volume. A useful detail rules out wrong answers. Extra words don't.</p>
+    <div class="doneBar"><button class="btn small ghost" data-done="purpose" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 3 -->
+<section id="drift">
+  <div class="stopHead"><span class="stopNum">3</span><h2>Five small edits.</h2></div>
+  <p class="time">12 minutes</p>
+  <div class="body">
+    <p>A GPS reroutes you when you miss a turn, but it never changes your destination. AI can change both, and then explain why the new destination was better all along. This exercise lets you watch it happen.</p>
+    <div class="try">
+      <h3>Try it</h3>
+      <ol class="steps">
+        <li>Stay in the same chat as your purpose image.</li>
+        <li>Ask for five edits, one at a time. Each one changes <b>one thing only</b> and ends with "Keep everything else exactly the same."</li>
+        <li>After each edit, write down anything else that changed that you didn't ask for.</li>
+      </ol>
+      <p class="hint">Need ideas? Tap one to copy it.</p>
+      <div class="edits" id="editIdeas"></div>
+      <table class="log">
+        <thead><tr><th></th><th>What I asked to change</th><th>What else changed anyway</th></tr></thead>
+        <tbody id="driftRows"></tbody>
+      </table>
+      <label class="f" for="driftCompare">Now put your first image next to your fifth. What's different that you never asked for?</label>
+      <textarea id="driftCompare" data-k="driftCompare" placeholder="The table changed from wood to marble, the light moved, there are twice as many grapes..."></textarea>
+    </div>
+    <p class="principle drift">AI is not a GPS. It can change the destination, one reasonable-looking step at a time.</p>
+    <p>Each edit is a fresh generation guided by everything said so far. Small, unrequested changes stack up. Drift is easy to see in an image. It's just as real in an email, a plan, or a spreadsheet, where it's much harder to spot.</p>
+    <div class="doneBar"><button class="btn small ghost" data-done="drift" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 4 -->
+<section id="fresh">
+  <div class="stopHead"><span class="stopNum">4</span><h2>Start fresh.</h2></div>
+  <p class="time">5 minutes</p>
+  <div class="body">
+    <p>Long conversations get crowded. The model is juggling more and more, and your earliest decisions carry less weight. Eventually the conversation runs out of room entirely. You'll usually feel it before you hit that wall.</p>
+    <h3 style="font-size:21px;margin:26px 0 4px">When things seem off</h3>
+    <ul class="signs">
+      <li>It brings back a mistake you already fixed</li>
+      <li>It forgets something you decided earlier</li>
+      <li>It changes things you didn't ask about</li>
+      <li>Answers get longer, vaguer, or more generic</li>
+      <li>You're arguing with it instead of building</li>
+      <li>You can't remember what you agreed on either</li>
+    </ul>
+    <div class="try">
+      <h3>Try it</h3>
+      <p>Don't throw the work away. Carry the decisions forward, not the clutter. In your bowl-of-fruit chat, send this:</p>
+      <div class="prompt" data-prompt>Summarize what we've decided so far: the goal, the decisions we've locked in, the context that matters, and what's still open. Write it so I can paste it into a brand-new conversation and pick up exactly where we left off.<button class="copy" type="button">Copy</button></div>
+      <ol class="steps">
+        <li>Open a <b>new chat</b>.</li>
+        <li>Paste the summary. Re-attach any files you were using.</li>
+        <li>Ask for the image again. Is it closer to what you meant than edit five was?</li>
+      </ol>
+    </div>
+    <p class="principle">When it starts to feel off, start a new conversation and bring your decisions with you.</p>
+    <div class="doneBar"><button class="btn small ghost" data-done="fresh" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 5 -->
+<section id="destination">
+  <div class="stopHead"><span class="stopNum">5</span><h2>Know the destination.</h2></div>
+  <p class="time">10 minutes. Your task starts here.</p>
+  <div class="body">
+    <p>You can get somewhere useful with one excellent prompt or twenty ordinary ones. Both work if the destination stays put. The skill isn't wording. It's knowing where you're going well enough to notice when the AI isn't taking you there.</p>
+    <p class="principle">You don't need to know how to get there. You do need to know what "there" is.</p>
+    <div class="compare">
+      <div class="weak"><b>Vague destination</b>"Help me with onboarding."</div>
+      <div class="strong"><b>Clear destination</b>"When this is finished, our shift lead can run a new hire's first week from one page."</div>
+    </div>
+    <div class="try">
+      <h3>Pick your real task</h3>
+      <p>Choose something you actually need to finish: an email, a plan, a document, a schedule, a decision, a training. You'll work on it for the rest of the morning.</p>
+      <label class="f" for="task">What are you working on?</label>
+      <input type="text" id="task" data-k="task" placeholder="A welcome guide for new volunteers at our food pantry">
+      <label class="f" for="who">When this is finished, who will use it?</label>
+      <input type="text" id="who" data-k="who" placeholder="New volunteers on their first Saturday">
+      <label class="f" for="able">…and what will they be able to do?</label>
+      <input type="text" id="able" data-k="able" placeholder="Find the stockroom, run the check-in table, and know who to ask, without a tour">
+      <label class="f" for="right">I'll know it's right when…</label>
+      <input type="text" id="right" data-k="right" placeholder="A first-timer can read it in five minutes and isn't left with questions">
+      <div class="sentence" id="destSentence"></div>
+      <label class="f" for="keep">Decisions I'm keeping for myself <span class="hint">the choices you won't hand to the AI</span></label>
+      <textarea id="keep" data-k="keep" placeholder="Our tone is friendly, not corporate. It fits on one sheet, front and back. Safety rules come first."></textarea>
+    </div>
+    <div class="doneBar"><button class="btn small ghost" data-done="destination" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 6 -->
+<section id="context">
+  <div class="stopHead"><span class="stopNum">6</span><h2>Context.</h2></div>
+  <p class="time">15 minutes</p>
+  <div class="body">
+    <p>Stop asking "what words should I use?" and start asking <b>"what does the AI need to know to help me succeed?"</b> That's context. A long prompt isn't automatically a good one. Useful context rules out wrong paths. Everything else is noise.</p>
+    <div class="try">
+      <h3>Same task, different context</h3>
+      <p>Flat Cap Co. makes camouflage flat caps for the whole family, pets included. They're changing their return policy.</p>
+      <p><b>Round one.</b> New chat. Just this:</p>
+      <div class="prompt" data-prompt>Write an announcement about a policy change.<button class="copy" type="button">Copy</button></div>
+      <p><b>Round two.</b> New chat. Choose who it's for, then copy the prompt. The memo below is already included.</p>
+      <div class="seg" role="group" aria-label="Audience" id="audSeg">
+        <button type="button" data-aud="staff" aria-pressed="true">Support staff</button>
+        <button type="button" data-aud="cust" aria-pressed="false">Customers</button>
+      </div>
+      <div class="memo" id="memo">
+        <div class="mh">Memo from Felix Bramble, Operations. November 2, 2026.</div>
+        <p><b>Returns are changing on December 1.</b> Every return will get one of five reason codes: Fit, Color or pattern, Damaged, Wrong item, Changed mind. Support staff choose the code. Customers no longer type in their own reason.</p>
+        <p><b>Why:</b> First-quarter returns rose 13%. "Fit not as expected" was the top reason at 38%, but reasons were logged so inconsistently that we couldn't tell what to fix.</p>
+        <p><b>What's new for customers:</b> Returns for fit become a free exchange for a different size within 30 days, and we pay shipping both ways. All other returns stay refund-only with a $6 return label fee.</p>
+        <p style="margin:0"><b>Staff action:</b> Finish the 10-minute reason-code guide by November 24. Questions go to Lindsay Draper.</p>
+      </div>
+      <div class="prompt" id="ctxPrompt"><span></span><button class="copy" type="button">Copy</button></div>
+      <div class="ask">
+        <h4>Talk about it</h4>
+        <ul>
+          <li>What did round one make up that wasn't true?</li>
+          <li>Compare with someone who picked the other audience. Same facts, how different is the result?</li>
+          <li>Which single piece of context changed the most?</li>
+        </ul>
+      </div>
+    </div>
+    <p class="principle">Every blank becomes a decision. Context is how you decide which blanks you fill and which ones you hand over on purpose.</p>
+    <div class="try">
+      <h3>Now your task</h3>
+      <p>Check what the AI would need for <b><span data-show="task">your task</span></b>. Add a quick note for each one you check. Skip anything that wouldn't change the result.</p>
+      <div class="ctxList" id="ctxList"></div>
+    </div>
+    <div class="doneBar"><button class="btn small ghost" data-done="context" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- break -->
+<section id="break" style="border-top:0;padding-top:24px">
+  <div class="pause">
+    <h2>Ten-minute break.</h2>
+    <p>Before you go, make sure <b>My task</b> has a real destination. That's what you'll build after the break.</p>
+  </div>
+</section>
+
+<!-- 7 -->
+<section id="cascade">
+  <div class="stopHead"><span class="stopNum">7</span><h2>Steer the conversation.</h2></div>
+  <p class="time">15 minutes</p>
+  <div class="body">
+    <p>You don't have to write the perfect prompt up front. Start with the problem, react to what comes back, add what's missing, reject what's wrong, keep what's good. Needing ten turns isn't failure. The middle turns are often where you figure out what you actually need.</p>
+    <div class="chain"><span>Idea</span><i>→</i><span>Conversation</span><i>→</i><span>Clarify</span><i>→</i><span>Context</span><i>→</i><span>Create</span><i>→</i><span>Critique</span><i>→</i><span>Refine</span><i>→</i><span>Done</span></div>
+    <div class="try">
+      <h3>Watch a real cascade</h3>
+      <p>A shop owner needs help onboarding new hires. Step through it and watch where the destination shows up, and where the AI tries to move it.</p>
+      <div class="chat" id="chat" aria-live="polite"></div>
+      <div id="moveNote"></div>
+      <div class="stepper">
+        <button class="btn small ghost" type="button" id="cPrev">Back</button>
+        <button class="btn small" type="button" id="cNext">Next turn</button>
+        <button class="btn small ghost" type="button" id="cAll">Show all</button>
+        <span class="count" id="cCount"></span>
+      </div>
+    </div>
+
+    <h3 id="steering" style="font-size:26px;margin:44px 0 6px">Steering phrases</h3>
+    <p>Short and casual works. Copy these into your own conversation and check off the ones you use.</p>
+    <ul class="phrases" id="phrases"></ul>
+
+    <div class="try">
+      <h3>Try it on your task</h3>
+      <ol class="steps">
+        <li>New chat. Start loosely. Describe your task the way you'd tell a coworker.</li>
+        <li>React to whatever comes back. Use at least three steering phrases.</li>
+        <li>Every few turns, check it against your destination: <b><span data-show="destShort">set one in section 5</span></b></li>
+      </ol>
+    </div>
+    <p class="principle">The conversation is where you discover the problem. Your job is to keep the destination from moving.</p>
+    <div class="doneBar"><button class="btn small ghost" data-done="cascade" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 8 -->
+<section id="workflow">
+  <div class="stopHead"><span class="stopNum">8</span><h2>Start at the end.</h2></div>
+  <p class="time">12 minutes</p>
+  <div class="body">
+    <p>Once a task is bigger than one exchange, stop treating it as a prompt problem. Break it into stages, and design them backward from "finished." Different stages need different context: research needs sources, drafting needs examples and tone, review needs the goal.</p>
+    <div class="chain"><span>Understand</span><i>→</i><span>Gather</span><i>→</i><span>Evaluate</span><i>→</i><span>Plan</span><i>→</i><span>Create</span><i>→</i><span>Review</span><i>→</i><span>Revise</span><i>→</i><span>Deliver</span></div>
+    <p class="principle">A prompt is a component, not the system. AI can find the route. You decide, you approve, and you own the result.</p>
+    <div class="try">
+      <h3>Reverse-design your workflow</h3>
+      <ol class="steps">
+        <li>Start with finished. What has to exist right before that? And right before that?</li>
+        <li>For each stage, split the work: what does AI do, what do you decide, and how do you know the stage is done?</li>
+      </ol>
+      <p class="hint">Add a stage, or tap a suggestion.</p>
+      <div class="edits" id="stageIdeas"></div>
+      <div class="stages" id="stages"></div>
+      <button class="btn small ghost" type="button" id="addStage">Add a stage</button>
+      <div class="finishLine" style="margin-top:16px"><small>Finished</small><span data-show="destFull">Set your destination in section 5</span></div>
+    </div>
+    <h3 style="font-size:21px;margin:30px 0 4px">Pick the right capability for the stage</h3>
+    <table class="caps">
+      <tr><td>Gather</td><td>Upload the files you already have, or turn on web search for current facts. Source material becomes the AI's working environment.</td></tr>
+      <tr><td>Evaluate</td><td>Upload a spreadsheet and ask for analysis. Ask it to show its work so you can check the numbers.</td></tr>
+      <tr><td>Create</td><td>Drafting, rewriting, images. Give examples of what good looks like.</td></tr>
+      <tr><td>Review</td><td>Ask for a critique against the goal you set, not a general "is this good?"</td></tr>
+      <tr><td>Decide</td><td>Stays with you. Approvals, judgment calls, anything with your name on it.</td></tr>
+    </table>
+    <p class="hint">Features change. Choosing the right capability for the stage doesn't.</p>
+    <div class="doneBar"><button class="btn small ghost" data-done="workflow" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 9 -->
+<section id="build">
+  <div class="stopHead"><span class="stopNum">9</span><h2>Build something real.</h2></div>
+  <p class="time">15 minutes</p>
+  <div class="body">
+    <p>The goal isn't to write a good prompt. It's to make real progress on something you need. This prompt is assembled from your answers so far. Open a new chat and start with it.</p>
+    <div class="try">
+      <h3>Your starting prompt</h3>
+      <div class="prompt" id="startPrompt"><span></span><button class="copy" type="button">Copy</button></div>
+      <ol class="steps">
+        <li>Paste it into a new chat. Attach source files if you have them, after checking the one rule.</li>
+        <li>Work through your first stage. Steer. Keep what's good.</li>
+        <li>If it starts to feel off, use the start-fresh prompt from section 4.</li>
+      </ol>
+    </div>
+    <h3 style="font-size:21px;margin:30px 0 4px">Before anything leaves your screen</h3>
+    <ul class="check">
+      <li>Is it still headed to your destination, or did it move?</li>
+      <li>Check every name, number, date, and source it gives you.</li>
+      <li>Remove anything it made up or can't support.</li>
+      <li>You read it. You sign off. Your name is on it, not the AI's.</li>
+    </ul>
+    <div class="doneBar"><button class="btn small ghost" data-done="build" type="button">Mark section done</button></div>
+  </div>
+</section>
+
+<!-- 10 -->
+<section id="teach">
+  <div class="stopHead"><span class="stopNum">10</span><h2>Teach it back.</h2></div>
+  <p class="time">5 minutes</p>
+  <div class="body">
+    <p>Now that you know where you were going, the "perfect prompt" is easy to write. Have the AI write it.</p>
+    <div class="try">
+      <h3>Try it</h3>
+      <p>In your build conversation, send this:</p>
+      <div class="prompt" data-prompt>Review everything we did in this conversation. Write the single prompt that could have produced something close to our final result from the beginning. Then explain which parts of that prompt mattered most and why.<button class="copy" type="button">Copy</button></div>
+      <p><b>Then test it.</b> Paste that prompt into a <b>new chat</b>. How close does it get?</p>
+      <label class="f" for="tbPrompt">The prompt it wrote <span class="hint">save it, it's reusable</span></label>
+      <textarea id="tbPrompt" data-k="tbPrompt" style="min-height:110px"></textarea>
+      <label class="f" for="tbResult">What happened when you tested it in a new chat?</label>
+      <textarea id="tbResult" data-k="tbResult" placeholder="Close, but it missed the tone we landed on..."></textarea>
+      <p class="hint" style="margin-top:12px">If it got close, you have a reusable prompt. If it didn't, you've just seen how much the conversation was doing.</p>
+    </div>
+    <div class="model" aria-label="The model"><span>Destination</span><span>Decisions</span><span>Context</span><span>Conversation</span><span>Workflow</span></div>
+    <p class="north">High-impact prompting isn't about finding magic words. AI can help find the route. You keep owning the destination.</p>
+    <div class="doneBar">
+      <button class="btn" type="button" id="printBtn">Print or save my plan</button>
+      <a class="btn ghost" href="handout.html">Open the handout</a>
+    </div>
+  </div>
+</section>
+
+  </main>
+</div>
+
+<footer class="site">High-Impact Prompting with ChatGPT. A WTPD workshop led by Josh Stutting. Flat Cap Co. is a fictional company used for practice.</footer>
+
+<button class="taskBtn" type="button" data-open-task aria-controls="drawer"><span>My task</span><span class="meter" aria-hidden="true"><i id="meter"></i></span></button>
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="My task" aria-hidden="true">
+  <header><h2>My task</h2><button class="x" type="button" id="closeTask" aria-label="Close">×</button></header>
+  <div class="scroll"><div class="sum" id="summary"></div></div>
+  <footer>
+    <button class="btn small" type="button" id="printBtn2">Print or save my plan</button>
+    <button class="btn small ghost" type="button" id="copyStart">Copy starting prompt</button>
+    <button class="btn small ghost" type="button" id="clearAll">Clear my work</button>
+  </footer>
+</aside>
+<div class="toast" id="toast" role="status"></div>
+<div id="printPlan"></div>
+
+<script>
+(function(){
+"use strict";
+var KEY="hip-workshop-v1", S={};
+try{S=JSON.parse(localStorage.getItem(KEY))||{}}catch(e){S={}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){} refresh()}
+function $(s,r){return (r||document).querySelector(s)}
+function $$(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))}
+function esc(t){return String(t==null?"":t).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function v(k){return (S[k]||"").trim()}
+
+var toastT;
+function toast(msg){var t=$("#toast");t.textContent=msg;t.classList.add("on");clearTimeout(toastT);toastT=setTimeout(function(){t.classList.remove("on")},1800)}
+function copyText(text,btn){
+  function ok(){ if(btn){btn.textContent="Copied";btn.classList.add("ok");setTimeout(function(){btn.textContent="Copy";btn.classList.remove("ok")},1600)} else toast("Copied") }
+  if(navigator.clipboard&&window.isSecureContext){navigator.clipboard.writeText(text).then(ok,function(){fallback()})} else fallback();
+  function fallback(){var ta=document.createElement("textarea");ta.value=text;ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();try{document.execCommand("copy");ok()}catch(e){toast("Select the text and copy it manually")}document.body.removeChild(ta)}
+}
+document.addEventListener("click",function(e){
+  var b=e.target.closest(".prompt .copy"); if(!b) return;
+  var p=b.parentNode, span=p.querySelector("span");
+  var text=span?span.textContent:Array.prototype.filter.call(p.childNodes,function(n){return n.nodeType===3}).map(function(n){return n.textContent}).join("");
+  copyText(text.trim(),b);
+});
+
+/* bound inputs */
+$$("[data-k]").forEach(function(el){
+  var k=el.getAttribute("data-k"); if(S[k]!=null) el.value=S[k];
+  el.addEventListener("input",function(){S[k]=el.value;$$('[data-k="'+k+'"]').forEach(function(o){if(o!==el)o.value=el.value});save()});
+});
+
+/* 1: decision tally */
+var DEC=["The bowl","Which fruit","How much fruit","Lighting","Background and table","Camera angle","Style (photo, painting...)","Mood"];
+var tally=$("#tally");
+DEC.forEach(function(d,i){
+  var row=document.createElement("div");row.className="row";
+  row.innerHTML='<span>'+d+'</span><span class="seg" role="group" aria-label="Who decided '+esc(d)+'"><button type="button" class="me" data-i="'+i+'" data-w="me">Me</button><button type="button" data-i="'+i+'" data-w="ai">The AI</button></span>';
+  tally.appendChild(row);
+});
+function drawTally(){
+  var t=S.tally||{}, me=0;
+  $$("#tally button").forEach(function(b){var w=t[b.dataset.i]||"ai";b.setAttribute("aria-pressed",String(w===b.dataset.w))});
+  DEC.forEach(function(_,i){if(t[i]==="me")me++});
+  $("#tallyScore").innerHTML='You made <span>'+me+'</span> of '+DEC.length+' decisions.';
+}
+tally.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;S.tally=S.tally||{};S.tally[b.dataset.i]=b.dataset.w;save();drawTally()});
+drawTally();
+
+/* 2: purpose */
+var PUR=[
+  {id:"flyer",t:"Grocery store weekly flyer",d:"Sells this week's sale fruit",ph:["Only the fruit on sale: peaches and plums","Bright, flat background that works behind price tags","Shot from straight above"]},
+  {id:"paint",t:"Still-life painting class",d:"A reference beginners will paint from",ph:["Three fruits, simple shapes","One strong light from the left with clear shadows","Plain cloth background"]},
+  {id:"book",t:"Picture book about a picky eater",d:"Page 1 of a children's story",ph:["Hand-drawn watercolor style","One suspicious-looking kiwi the kid refuses to eat","Eye level of a seven-year-old"]},
+  {id:"menu",t:"Restaurant dessert menu",d:"Upscale, autumn season",ph:["Pears, figs, and grapes only","Dark, moody lighting","Shallow focus on a stoneware bowl"]}
+];
+var pc=$("#purposes");
+PUR.forEach(function(p){var b=document.createElement("button");b.type="button";b.className="choice";b.dataset.id=p.id;b.innerHTML="<b>"+p.t+"</b><small>"+p.d+"</small>";pc.appendChild(b)});
+pc.addEventListener("click",function(e){var b=e.target.closest(".choice");if(!b)return;S.purpose=b.dataset.id;save();drawPurpose()});
+["pd1","pd2","pd3"].forEach(function(k){$("#"+k).addEventListener("input",drawPurpose)});
+function drawPurpose(){
+  var p=PUR.filter(function(x){return x.id===S.purpose})[0];
+  $$("#purposes .choice").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===S.purpose))});
+  ["pd1","pd2","pd3"].forEach(function(k,i){$("#"+k).placeholder=p?p.ph[i]:"Pick a purpose first"});
+  var ds=["pd1","pd2","pd3"].map(v).filter(Boolean);
+  var txt=p?"Create an image of a bowl of fruit for a "+p.t.charAt(0).toLowerCase()+p.t.slice(1)+" ("+p.d.charAt(0).toLowerCase()+p.d.slice(1)+")."+(ds.length?" "+ds.map(function(d){return d.replace(/[.\s]+$/,"")+"."}).join(" "):""):"Pick a purpose above.";
+  $("#purposePrompt span").textContent=txt;
+}
+drawPurpose();
+
+/* 3: drift */
+var EDITS=["Make the bowl blue glass.","Add one banana.","Move the window light to the right side.","Make it evening.","Put a spoon next to the bowl."];
+var ei=$("#editIdeas");
+EDITS.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=t;b.addEventListener("click",function(){copyText(t+" Keep everything else exactly the same.");});ei.appendChild(b)});
+var dr=$("#driftRows");
+for(var i=1;i<=5;i++){var tr=document.createElement("tr");tr.innerHTML='<td>'+i+'</td><td><input type="text" data-k="d'+i+'a" aria-label="Edit '+i+': what I asked"></td><td><input type="text" data-k="d'+i+'b" aria-label="Edit '+i+': what else changed"></td>';dr.appendChild(tr)}
+$$("#driftRows [data-k]").forEach(function(el){var k=el.dataset.k;if(S[k])el.value=S[k];el.addEventListener("input",function(){S[k]=el.value;save()})});
+
+/* 5: destination sentence */
+function destFull(){var w=v("who"),a=v("able");return (w||a)?"When this is finished, "+(w||"___")+" will be able to "+(a||"___").replace(/\.$/,"")+".":""}
+function drawDest(){
+  var w=v("who"),a=v("able"),r=v("right");
+  $("#destSentence").innerHTML='When this is finished, <span class="blank">'+esc(w||"someone")+'</span> will be able to <span class="blank">'+esc((a||"do something").replace(/\.$/,""))+'</span>.'+(r?'<br><span style="font-weight:500;font-size:19px">I\'ll know it\'s right when '+esc(r.replace(/\.$/,""))+'.</span>':'');
+}
+
+/* 6: context prompt + checklist */
+var AUD={staff:{a:"Our customer support staff",p:"Make sure they know exactly what changes, what they must do, and by when",t:"Direct and practical. Short paragraphs."},
+         cust:{a:"Our customers",p:"Explain what changes for them and why it helps them",t:"Warm, short, and plain. No internal terms like \"reason codes.\""}};
+S.aud=S.aud||"staff";
+function memoText(){return $$("#memo p").map(function(p){return p.textContent}).join("\n")}
+function drawCtx(){
+  $$("#audSeg button").forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.aud===S.aud))});
+  var a=AUD[S.aud];
+  $("#ctxPrompt span").textContent="Write an announcement about a policy change.\n\nAudience: "+a.a+"\nPurpose: "+a.p+"\nTone: "+a.t+"\nUse only the facts in the memo below. Don't add anything it doesn't say.\n\nMemo:\n"+memoText();
+}
+$("#audSeg").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;S.aud=b.dataset.aud;save();drawCtx()});
+drawCtx();
+var CTX=[
+  ["goal","Goal and what success looks like","Your destination, in plain words"],
+  ["aud","Audience and purpose","Who it's for and what it should do for them"],
+  ["src","Source documents and facts","Notes, data, past versions, the real numbers"],
+  ["ex","Examples","Something good to imitate, or bad to avoid"],
+  ["con","Constraints and non-negotiables","Length, budget, deadline, must-include, must-not"],
+  ["hist","History and earlier decisions","What's already been decided and why"],
+  ["tried","What's already been tried","So it doesn't suggest the thing that failed"],
+  ["rules","Rules and policies","Organization rules, regulations, standards"],
+  ["fmt","Tone, format, and where it will be used","Email, printed sheet, slide, text message"]
+];
+var cl=$("#ctxList");
+CTX.forEach(function(c){
+  var d=document.createElement("div");d.className="ctx";d.dataset.c=c[0];
+  d.innerHTML='<label><input type="checkbox"><span>'+c[1]+'<small>'+c[2]+'</small></span></label><textarea aria-label="Notes for '+esc(c[1])+'" placeholder="What the AI needs to know"></textarea>';
+  var cb=d.querySelector("input"),ta=d.querySelector("textarea");S.ctx=S.ctx||{};var st=S.ctx[c[0]]||{};
+  cb.checked=!!st.on;ta.value=st.n||"";d.classList.toggle("on",cb.checked);
+  cb.addEventListener("change",function(){S.ctx[c[0]]=S.ctx[c[0]]||{};S.ctx[c[0]].on=cb.checked;d.classList.toggle("on",cb.checked);save();if(cb.checked)ta.focus()});
+  ta.addEventListener("input",function(){S.ctx[c[0]]=S.ctx[c[0]]||{};S.ctx[c[0]].n=ta.value;save()});
+  cl.appendChild(d);
+});
+function ctxItems(){var o=[];CTX.forEach(function(c){var st=(S.ctx||{})[c[0]];if(st&&st.on)o.push({l:c[1],n:(st.n||"").trim()})});return o}
+
+/* 7: cascade */
+var CHAT=[
+  {w:"you",t:"I need help onboarding new hires.",m:["Start loose","That's fine. You don't need a perfect first prompt."]},
+  {w:"ai",t:"Here's a comprehensive 90-day onboarding program. Pre-boarding: send a welcome packet, set up HR system access, assign learning modules. Week 1: mission and values orientation, benefits enrollment, team introductions. 30/60/90-day check-ins with performance goals…",m:["The AI filled every blank","Nothing here is wrong. None of it is about this business.",1]},
+  {w:"you",t:"That's way bigger than we are. Before you go any further, ask me the questions you need answered.",m:["Ask me questions","Hand the AI the job of finding what's missing."]},
+  {w:"ai",t:"Happy to narrow it down. 1. What kind of business is this, and how many people? 2. What does a new hire do on day one? 3. Who runs onboarding, and how much time do they have? 4. What usually goes wrong with new people? 5. What should a new hire be able to do by the end of week one?"},
+  {w:"you",t:"12-person machine shop. New hires are on the floor Monday morning. Our shift lead runs it and has maybe 20 minutes a day. What goes wrong: people skip the safety stuff and nobody knows who to ask. By Friday they should run the saw and the deburr station safely and know who to go to.",m:["Add context, name the destination","\"By Friday they should…\" is the destination. Now there's something to steer toward."]},
+  {w:"ai",t:"Here's a first-week plan. Monday: safety walk (PPE, e-stops, lockout points) and assign a buddy. Tuesday: shadow at the saw. Wednesday: run the saw with the buddy. Thursday: deburr station. Friday: sign-off with the shift lead. I've also outlined a 14-page employee handbook to go with it…"},
+  {w:"you",t:"Keep the safety walk and the buddy. Drop the handbook. Nobody here reads a binder. Make the rest fit on one page.",m:["Keep this, change that","Protect what's working before you fix what isn't."]},
+  {w:"ai",t:"Here's the one-page version. And to make this scalable as you grow, I'd recommend moving onboarding into a learning platform with short video modules and quizzes. Here's a rollout plan for choosing a vendor, recording videos, and tracking completion…",m:["Drift","The destination just changed from one page a shift lead runs to a software project, and it sounds perfectly reasonable.",1]},
+  {w:"you",t:"We're drifting. Go back to what we decided: one page the shift lead can run in 20 minutes a day.",m:["We're drifting","Name it, and restate the destination."]},
+  {w:"ai",t:"You're right, that went beyond what you need. One page, five days. Each day has one 15-minute activity and one \"show me\" check the shift lead initials. Day 1: safety walk and meet your buddy…"},
+  {w:"you",t:"Critique this against the goal we set. What would still make a new hire fail?",m:["Critique it against the goal","Not \"is this good?\" but \"does this get us there?\""]},
+  {w:"ai",t:"Two gaps. \"Know who to ask\" only works if the buddy's name is written on the sheet. And Friday's sign-off has no clear standard for the deburr station. I'd add a buddy-name line at the top and a pass standard: three parts in spec, no help."},
+  {w:"you",t:"Good. Add both. That's the final version.",m:["Lock it","Seven messages from the person, and none of them were fancy. The destination never moved, because the person kept checking it."]}
+];
+var step=0;
+function drawChat(anim){
+  var c=$("#chat");c.innerHTML="";
+  for(var i=0;i<=step;i++){var t=CHAT[i];var d=document.createElement("div");d.className="turn "+t.w+(t.m&&t.m[2]?" drifted":"")+(anim&&i===step?" new":"");d.innerHTML='<span class="who">'+(t.w==="you"?"You":"ChatGPT")+'</span>'+esc(t.t);c.appendChild(d)}
+  var cur=CHAT[step],n=$("#moveNote");
+  n.innerHTML=cur.m?'<div class="move'+(cur.m[2]?" warn":"")+'"><b>'+esc(cur.m[0])+'</b>'+esc(cur.m[1])+'</div>':"";
+  $("#cCount").textContent="Turn "+(step+1)+" of "+CHAT.length;
+  $("#cPrev").disabled=step===0;$("#cNext").disabled=step===CHAT.length-1;
+}
+$("#cNext").addEventListener("click",function(){if(step<CHAT.length-1){step++;drawChat(true)}});
+$("#cPrev").addEventListener("click",function(){if(step>0){step--;drawChat(false)}});
+$("#cAll").addEventListener("click",function(){step=CHAT.length-1;drawChat(false)});
+drawChat(false);
+
+var PH=[
+  ["That's not what I meant.","Reject a wrong turn early"],
+  ["Keep this part and change the rest.","Protect what works"],
+  ["What am I missing?","Find gaps you can't see"],
+  ["Ask me the questions you need before continuing.","Let it pull context out of you"],
+  ["We're drifting from the original goal.","Name the drift"],
+  ["Go back to what we decided earlier.","Restore the destination"],
+  ["Give me three genuinely different approaches.","Escape the first default"],
+  ["What assumptions are you making?","Surface hidden decisions"],
+  ["Critique this against the goal we established.","Check the route against the destination"],
+  ["Summarize what we've decided so I can start a new chat.","Start fresh without losing work"]
+];
+var pl=$("#phrases");S.ph=S.ph||{};
+PH.forEach(function(p,i){
+  var li=document.createElement("li");
+  li.innerHTML='<input type="checkbox" aria-label="I used this"'+(S.ph[i]?" checked":"")+'><span>'+esc(p[0])+'<small>'+esc(p[1])+'</small></span><button class="copy" type="button">Copy</button>';
+  li.querySelector("input").addEventListener("change",function(e){S.ph[i]=e.target.checked;save()});
+  li.querySelector(".copy").addEventListener("click",function(e){copyText(p[0],e.target)});
+  pl.appendChild(li);
+});
+
+/* 8: workflow */
+var IDEAS=["Understand","Gather","Evaluate","Plan","Create","Review","Revise","Deliver"];
+S.stages=S.stages||[];
+var si=$("#stageIdeas");
+IDEAS.forEach(function(t){var b=document.createElement("button");b.type="button";b.className="chip";b.textContent=t;b.addEventListener("click",function(){addStage(t)});si.appendChild(b)});
+function addStage(name){S.stages.push({n:name||"",ai:"",me:"",done:""});save();drawStages(true)}
+$("#addStage").addEventListener("click",function(){addStage("")});
+function drawStages(focusLast){
+  var box=$("#stages");box.innerHTML="";
+  S.stages.forEach(function(s,i){
+    var d=document.createElement("div");d.className="stage";
+    d.innerHTML='<div class="top"><span class="n">'+(i+1)+'</span><input type="text" data-f="n" placeholder="Stage name" aria-label="Stage '+(i+1)+' name"><button class="x" type="button" aria-label="Remove stage">×</button></div>'+
+      '<div class="grid3"><div><label>AI does</label><textarea data-f="ai"></textarea></div><div><label>I decide</label><textarea data-f="me"></textarea></div><div><label>Done when</label><textarea data-f="done"></textarea></div></div>';
+    $$("[data-f]",d).forEach(function(el){var f=el.dataset.f;el.value=s[f]||"";el.addEventListener("input",function(){s[f]=el.value;save()})});
+    d.querySelector(".x").addEventListener("click",function(){S.stages.splice(i,1);save();drawStages()});
+    box.appendChild(d);
+  });
+  if(focusLast&&S.stages.length){var l=box.lastChild.querySelector(S.stages[S.stages.length-1].n?"textarea":"input");l&&l.focus()}
+}
+drawStages();
+
+/* 9: starting prompt */
+function startPrompt(){
+  var L=[];
+  L.push("I'm working on: "+(v("task")||"[your task]")+".");
+  var df=destFull(); if(df) L.push(df);
+  if(v("right")) L.push("I'll know it's right when "+v("right").replace(/\.$/,"")+".");
+  if(v("keep")) L.push("\nDecisions I've already made (don't change these):\n"+v("keep"));
+  var c=ctxItems().filter(function(x){return x.n});
+  if(c.length) L.push("\nContext you need:\n"+c.map(function(x){return "- "+x.l+": "+x.n}).join("\n"));
+  var st=S.stages.filter(function(s){return (s.n||"").trim()});
+  if(st.length) L.push("\nHere's how I plan to work through it:\n"+st.map(function(s,i){return (i+1)+". "+s.n.trim()}).join("\n")+"\n\nLet's start with stage 1: "+st[0].n.trim()+".");
+  L.push("\nBefore you begin, ask me any questions you need answered. Don't fill in important gaps on your own.");
+  return L.join("\n");
+}
+$("#copyStart").addEventListener("click",function(e){copyText(startPrompt(),null)});
+
+/* done markers + scrollspy */
+S.done=S.done||{};
+$$("[data-done]").forEach(function(b){b.addEventListener("click",function(){var k=b.dataset.done;S.done[k]=!S.done[k];save()})});
+var links=$$(".rail ol a"), secs=links.map(function(a){return $(a.getAttribute("href"))});
+function spy(){var y=window.scrollY+window.innerHeight*.3,cur=0;secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i});links.forEach(function(a,i){a.classList.toggle("active",i===cur)});
+  var act=links[cur];if(act&&window.innerWidth<=1060){var r=$(".rail");var l=act.offsetLeft-r.clientWidth/2+act.clientWidth/2;if(Math.abs(r.scrollLeft-l)>40)r.scrollLeft=l}}
+window.addEventListener("scroll",spy,{passive:true});spy();
+
+/* drawer */
+var drawer=$("#drawer"),scrim=$("#scrim");
+function openTask(e){if(e)e.preventDefault();drawer.classList.add("open");scrim.classList.add("on");drawer.setAttribute("aria-hidden","false");$("#closeTask").focus()}
+function closeTask(){drawer.classList.remove("open");scrim.classList.remove("on");drawer.setAttribute("aria-hidden","true")}
+$$("[data-open-task]").forEach(function(b){b.addEventListener("click",openTask)});
+$("#closeTask").addEventListener("click",closeTask);scrim.addEventListener("click",closeTask);
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeTask()});
+$("#clearAll").addEventListener("click",function(){if(confirm("Clear everything you've entered on this page?")){S={aud:"staff",stages:[],ctx:{},ph:{},done:{},tally:{}};try{localStorage.removeItem(KEY)}catch(e){}location.reload()}});
+
+function para(t){return t?"<p>"+esc(t)+"</p>":'<p class="empty">Not yet</p>'}
+function summaryHTML(){
+  var h="";
+  h+="<h4>Task</h4>"+para(v("task"));
+  h+="<h4>Destination</h4>"+para(destFull()+(v("right")?" I'll know it's right when "+v("right").replace(/\.$/,"")+".":""));
+  h+="<h4>Decisions I'm keeping</h4>"+para(v("keep"));
+  var c=ctxItems();h+="<h4>Context the AI needs</h4>"+(c.length?"<ul>"+c.map(function(x){return "<li><b>"+esc(x.l)+"</b>"+(x.n?": "+esc(x.n):"")+"</li>"}).join("")+"</ul>":'<p class="empty">Not yet</p>');
+  var st=S.stages.filter(function(s){return (s.n||"").trim()});
+  h+="<h4>Workflow</h4>"+(st.length?"<ul>"+st.map(function(s){return "<li><b>"+esc(s.n)+"</b>"+(s.me?" (I decide: "+esc(s.me)+")":"")+"</li>"}).join("")+"</ul>":'<p class="empty">Not yet</p>');
+  var used=PH.filter(function(_,i){return S.ph&&S.ph[i]}).map(function(p){return p[0]});
+  h+="<h4>Steering phrases I used</h4>"+(used.length?"<ul>"+used.map(function(p){return "<li>"+esc(p)+"</li>"}).join("")+"</ul>":'<p class="empty">Not yet</p>');
+  h+="<h4>My reusable prompt</h4>"+para(v("tbPrompt"));
+  return h;
+}
+function progress(){var n=0,keys=["task","who","able","right","keep"];keys.forEach(function(k){if(v(k))n++});if(ctxItems().length)n++;if(S.stages.some(function(s){return (s.n||"").trim()}))n++;if(v("tbPrompt"))n++;return n/8}
+
+function printPlan(){
+  var st=S.stages.filter(function(s){return (s.n||"").trim()});
+  var h='<h1>My plan</h1><p class="pp-meta">High-Impact Prompting with ChatGPT. WTPD, November 10, 2026.</p>';
+  h+="<h2>Task</h2>"+para(v("task"));
+  h+="<h2>Destination</h2>"+para(destFull())+(v("right")?para("I'll know it's right when "+v("right").replace(/\.$/,"")+"."):"");
+  h+="<h2>Decisions I'm keeping</h2>"+para(v("keep"));
+  var c=ctxItems();h+="<h2>Context the AI needs</h2>"+(c.length?"<ul>"+c.map(function(x){return "<li><b>"+esc(x.l)+"</b>"+(x.n?": "+esc(x.n):"")+"</li>"}).join("")+"</ul>":para(""));
+  h+="<h2>Workflow</h2>"+(st.length?"<table><tr><th>#</th><th>Stage</th><th>AI does</th><th>I decide</th><th>Done when</th></tr>"+st.map(function(s,i){return "<tr><td>"+(i+1)+"</td><td>"+esc(s.n)+"</td><td>"+esc(s.ai)+"</td><td>"+esc(s.me)+"</td><td>"+esc(s.done)+"</td></tr>"}).join("")+"</table>":para(""));
+  h+="<h2>Starting prompt</h2><div class=\"pp-prompt\">"+esc(startPrompt())+"</div>";
+  if(v("tbPrompt"))h+="<h2>My reusable prompt</h2><div class=\"pp-prompt\">"+esc(v("tbPrompt"))+"</div>";
+  if(v("tbResult"))h+="<h2>When I tested it</h2>"+para(v("tbResult"));
+  h+="<h2>When things seem off</h2><p>Summarize what we've decided so far: the goal, the decisions we've locked in, the context that matters, and what's still open. Write it so I can paste it into a brand-new conversation.</p>";
+  $("#printPlan").innerHTML=h;
+}
+window.addEventListener("beforeprint",printPlan);
+$("#printBtn").addEventListener("click",function(){printPlan();window.print()});
+$("#printBtn2").addEventListener("click",function(){printPlan();window.print()});
+
+/* refresh everything derived */
+function refresh(){
+  drawDest();
+  $$('[data-show="task"]').forEach(function(e){e.textContent=v("task")||"your task"});
+  $$('[data-show="destShort"]').forEach(function(e){e.textContent=destFull()||"set one in section 5"});
+  $$('[data-show="destFull"]').forEach(function(e){e.textContent=destFull()||"Set your destination in section 5"});
+  $("#startPrompt span").textContent=startPrompt();
+  $("#summary").innerHTML=summaryHTML();
+  $("#meter").style.width=Math.round(progress()*100)+"%";
+  $$("[data-done]").forEach(function(b){var on=!!(S.done||{})[b.dataset.done];b.setAttribute("aria-pressed",String(on));b.textContent=on?"Done":"Mark section done"});
+  links.forEach(function(a){var id=a.getAttribute("href").slice(1);a.classList.toggle("done",!!(S.done||{})[id])});
+}
+refresh();
+})();
+</script>
+</body>
+</html>

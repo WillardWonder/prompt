@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Handout: High-Impact Prompting with ChatGPT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap" rel="stylesheet">
+<style>
+:root{--paper:#EDF0F3;--ink:#16212C;--muted:#596877;--line:#CBD3DC;--route:#2B4ACB;--route-soft:#E3E8FA;--drift:#C98A0B;--drift-soft:#FBF0D6;
+--display:"Bricolage Grotesque",system-ui,sans-serif;--serif:"Source Serif 4",Georgia,serif;--mono:"IBM Plex Mono",ui-monospace,monospace}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:var(--display);margin:0;letter-spacing:-.015em;line-height:1.1}
+p{margin:0 0 .6em}
+a{color:var(--route)}
+:focus-visible{outline:3px solid var(--route);outline-offset:3px}
+.bar{max-width:8.5in;margin:0 auto;padding:22px 0 0;display:flex;gap:10px;justify-content:space-between;align-items:center;font-family:var(--display);font-size:15px}
+.bar button{font-family:var(--display);font-weight:600;font-size:15px;padding:9px 18px;border-radius:999px;border:0;background:var(--ink);color:#fff;cursor:pointer}
+.bar button:hover{background:var(--route)}
+.sheet{width:8.5in;max-width:calc(100% - 24px);min-height:11in;margin:16px auto 28px;background:#fff;padding:.55in .6in;box-shadow:0 20px 50px -30px rgba(22,33,44,.5)}
+.head{display:flex;justify-content:space-between;align-items:flex-end;border-bottom:3px solid var(--ink);padding-bottom:12px;margin-bottom:18px;gap:20px}
+.head h1{font-size:30px;font-weight:800;letter-spacing:-.03em}
+.head .m{font-family:var(--display);font-size:12.5px;color:var(--muted);text-align:right}
+.big{font-family:var(--display);font-size:22px;font-weight:700;letter-spacing:-.02em;line-height:1.2;margin:0 0 18px}
+.big span{display:block;color:var(--muted);font-weight:600}
+.model{display:grid;grid-template-columns:repeat(5,1fr);gap:0;margin-bottom:20px;border:1.5px solid var(--ink);border-radius:10px;overflow:hidden}
+.model div{padding:10px 11px;border-right:1.5px solid var(--ink)}
+.model div:last-child{border-right:0}
+.model b{display:block;font-family:var(--display);font-size:15px;color:var(--route)}
+.model small{font-size:12.5px;line-height:1.35;display:block}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:20px 26px}
+h2{font-size:15.5px;margin:0 0 6px;color:var(--ink)}
+.box{font-size:14px}
+.box ul{margin:0;padding-left:1.05em}
+.box li{margin-bottom:3px}
+.pr{font-family:var(--mono);font-size:12px;line-height:1.45;background:#F3F5F9;border-left:3px solid var(--route);padding:8px 10px;border-radius:0 6px 6px 0;margin:4px 0 6px}
+.pr.drift{border-color:var(--drift)}
+.fill{font-family:var(--display);font-size:15px;font-weight:600;background:var(--route-soft);padding:10px 12px;border-radius:8px;line-height:1.6}
+.fill i{font-style:normal;display:inline-block;min-width:110px;border-bottom:1.5px solid var(--route)}
+.signs{background:var(--drift-soft);border-radius:8px;padding:10px 12px}
+.foot{margin-top:18px;padding-top:10px;border-top:1px solid var(--line);font-family:var(--display);font-size:11.5px;color:var(--muted);display:flex;justify-content:space-between}
+@media (max-width:760px){.sheet{padding:24px 18px;min-height:0}.cols,.model{grid-template-columns:1fr}.model div{border-right:0;border-bottom:1.5px solid var(--ink)}.model div:last-child{border-bottom:0}.head{flex-direction:column;align-items:flex-start}.head .m{text-align:left}}
+@media print{@page{size:letter;margin:0}body{background:#fff}.bar{display:none}.sheet{margin:0;box-shadow:none;width:8.5in;max-width:none;min-height:0;height:11in;page-break-after:always;overflow:hidden}.sheet:last-of-type{page-break-after:auto}}
+</style>
+</head>
+<body>
+<div class="bar"><a href="index.html">Back to the workshop</a><button type="button" onclick="window.print()">Print or save as PDF</button></div>
+
+<article class="sheet">
+  <div class="head">
+    <h1>High-Impact Prompting</h1>
+    <div class="m">WTPD workshop, November 10, 2026<br>willardwonder.github.io/prompt</div>
+  </div>
+  <p class="big">You don't need to know the route.<span>You do need to know where you're going.</span></p>
+
+  <div class="model">
+    <div><b>Destination</b><small>Know what finished looks like before you worry about wording.</small></div>
+    <div><b>Decisions</b><small>AI fills in every blank. Keep the choices that matter.</small></div>
+    <div><b>Context</b><small>Give it what it needs to succeed. Useful detail rules out wrong paths.</small></div>
+    <div><b>Conversation</b><small>Start loose, react, steer. Ten turns isn't failure.</small></div>
+    <div><b>Workflow</b><small>Bigger jobs get stages, designed backward from the end.</small></div>
+  </div>
+
+  <div class="cols">
+    <div class="box">
+      <h2>Set the destination</h2>
+      <div class="fill">When this is finished, <i>&nbsp;</i> will be able to <i>&nbsp;</i>.<br>I'll know it's right when <i>&nbsp;</i>.</div>
+      <p style="margin-top:10px">One excellent prompt or twenty ordinary ones can both get there, as long as the destination doesn't move.</p>
+    </div>
+    <div class="box">
+      <h2>AI is not a GPS</h2>
+      <p>A GPS reroutes you but keeps your destination. AI can change the destination, one reasonable-looking step at a time, and then explain why the new one was better. Every few turns, check where it's taking you.</p>
+      <p>Ask for a change, then look for what else changed that you didn't ask for.</p>
+    </div>
+
+    <div class="box">
+      <h2>Context the AI might need</h2>
+      <ul>
+        <li>Goal and what success looks like</li>
+        <li>Audience and purpose</li>
+        <li>Source documents and real facts</li>
+        <li>Examples of good, or bad</li>
+        <li>Constraints and non-negotiables</li>
+        <li>History and earlier decisions</li>
+        <li>What's already been tried</li>
+        <li>Rules and policies</li>
+        <li>Tone, format, and where it will be used</li>
+      </ul>
+      <p style="margin-top:6px">Long isn't the same as good. Skip anything that wouldn't change the result.</p>
+    </div>
+    <div class="box">
+      <h2>Steering phrases</h2>
+      <ul>
+        <li>That's not what I meant.</li>
+        <li>Keep this part and change the rest.</li>
+        <li>What am I missing?</li>
+        <li>Ask me the questions you need before continuing.</li>
+        <li>We're drifting from the original goal.</li>
+        <li>Go back to what we decided earlier.</li>
+        <li>Give me three genuinely different approaches.</li>
+        <li>What assumptions are you making?</li>
+        <li>Critique this against the goal we established.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="foot"><span>High-Impact Prompting with ChatGPT</span><span>1 of 2</span></div>
+</article>
+
+<article class="sheet">
+  <div class="cols" style="margin-top:4px">
+    <div class="box">
+      <h2>When things seem off, start fresh</h2>
+      <div class="signs">
+        <ul>
+          <li>It brings back a mistake you already fixed</li>
+          <li>It forgets something you decided</li>
+          <li>It changes things you didn't ask about</li>
+          <li>Answers get longer, vaguer, more generic</li>
+          <li>You're arguing instead of building</li>
+        </ul>
+      </div>
+      <p style="margin-top:8px">Long conversations get crowded and eventually run out of room. Carry the decisions forward, not the clutter:</p>
+      <div class="pr drift">Summarize what we've decided so far: the goal, the decisions we've locked in, the context that matters, and what's still open. Write it so I can paste it into a brand-new conversation and pick up exactly where we left off.</div>
+      <p>Paste it into a new chat and re-attach your files.</p>
+    </div>
+    <div class="box">
+      <h2>Start at the end</h2>
+      <p>For bigger work, begin with "what does finished look like?" and work backward. What has to exist right before that? And before that?</p>
+      <p style="font-family:var(--display);font-size:13px;font-weight:600">Understand, Gather, Evaluate, Plan, Create, Review, Revise, Deliver</p>
+      <p>For each stage, ask:</p>
+      <ul>
+        <li>What's the goal of this stage?</li>
+        <li>What context does it need?</li>
+        <li>What should AI do?</li>
+        <li>What should I decide?</li>
+        <li>How will I know it's done?</li>
+      </ul>
+      <p style="margin-top:6px">A prompt is a component, not the system. You keep the approvals and the responsibility.</p>
+    </div>
+
+    <div class="box">
+      <h2>Turn a good conversation into a reusable prompt</h2>
+      <div class="pr">Review everything we did in this conversation. Write the single prompt that could have produced something close to our final result from the beginning. Then explain which parts of that prompt mattered most and why.</div>
+      <p>Then test it in a <b>new chat</b>. If it gets close, save it. If it doesn't, you've learned how much the conversation was doing.</p>
+    </div>
+    <div class="box">
+      <h2>Before anything leaves your screen</h2>
+      <ul>
+        <li>Is it still headed to your destination?</li>
+        <li>Check every name, number, date, and source.</li>
+        <li>Remove anything it made up or can't support.</li>
+        <li>Don't paste confidential, personal, or customer information into a tool your organization hasn't approved.</li>
+        <li>You read it. You sign off.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="margin-top:22px;padding:16px 18px;border-radius:10px;background:var(--ink);color:#fff">
+    <p style="font-family:var(--display);font-size:18px;font-weight:600;line-height:1.3;margin:0">High-impact prompting isn't about finding magic words. It's knowing the outcome you want, keeping the decisions that matter, giving the AI the context it needs, and steering until you get there. AI can help find the route. You own the destination.</p>
+  </div>
+
+  <div class="box" style="margin-top:20px">
+    <h2>My notes</h2>
+    <div style="height:1.7in;border:1.5px dashed var(--line);border-radius:8px"></div>
+  </div>
+  <div class="foot"><span>High-Impact Prompting with ChatGPT</span><span>2 of 2</span></div>
+</article>
+</body>
+</html>
