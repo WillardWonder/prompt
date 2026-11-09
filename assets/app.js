@@ -29,7 +29,7 @@ function copyText(text,btn,label){
    data-mode="attach" -> Copy and open ChatGPT, attach files first          */
 var CHAT="https://chatgpt.com/";
 function url(t){return CHAT+"?q="+encodeURIComponent(t)}
-var WHERE={new:"Starts a new chat",same:"Paste into the same chat",attach:"Attach the files, then paste"};
+var WHERE={new:"Starts a new chat",same:"A follow-up: copy it, then paste it into the chat you already have open",attach:"Attach the files, then paste"};
 function build(el){
   if(el.dataset.built)return;el.dataset.built="1";
   var mode=el.getAttribute("data-mode")||"new",text=el.textContent.replace(/^\s*\n/,"").replace(/\s+$/,"");
@@ -105,7 +105,7 @@ if(pc){
     $$(".choice",pc).forEach(function(b){b.setAttribute("aria-pressed",String(b.dataset.id===S.purpose))});
     ["pd1","pd2","pd3"].forEach(function(k,i){$("#"+k).placeholder=p?p.ph[i]:"Pick a purpose first"});
     var ds=["pd1","pd2","pd3"].map(v).filter(Boolean);
-    setP($("#purposePrompt"),p?"Make a new image of this bowl of fruit for a "+p.t.toLowerCase()+" ("+p.d+")."+(ds.length?" "+ds.map(function(d){return nodot(d)+"."}).join(" "):""):"Pick a purpose above, then add your decisions.")});
+    setP($("#purposePrompt"),p?"Create an image of a bowl of fruit for a "+p.t.toLowerCase()+" ("+p.d+")."+(ds.length?" "+ds.map(function(d){return nodot(d)+"."}).join(" "):""):"Pick a purpose above, then add your decisions.")});
 }
 
 /* ---------- drift log ---------- */
