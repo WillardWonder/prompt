@@ -116,7 +116,7 @@ if(dr){for(var i=1;i<=5;i++){var tr=document.createElement("tr");tr.innerHTML='<
 /* ---------- destination ---------- */
 var ds=$("#destSentence");
 if(ds)on(function(){var w=v("who"),a=v("able"),r=v("right");
-  ds.innerHTML='When this is finished, <span class="blank">'+esc(w||"someone")+'</span> will be able to <span class="blank">'+esc(nodot(a||"do something"))+'</span>.'+(r?'<br><span style="font-weight:500;font-size:18px">I\'ll know it\'s right when '+esc(nodot(r))+'.</span>':'')});
+  ds.innerHTML='When this is finished, <span class="blank">'+esc(w||"someone")+'</span> will be able to <span class="blank">'+esc(nodot(a||"do something"))+'</span>.'+(r?'<span class="sub">I\'ll know it\'s right when '+esc(nodot(r))+'.</span>':'')});
 
 /* ---------- context: audience prompt ---------- */
 var aud=$("#audSeg");
@@ -238,9 +238,9 @@ window.addEventListener("beforeprint",printPlan);
 $$("[data-print]").forEach(function(b){b.addEventListener("click",function(){printPlan();window.print()})});
 
 /* ---------- rail scrollspy ---------- */
-var links=$$(".rail ol a"),secs=links.map(function(a){return $(a.getAttribute("href"))});
+var links=$$(".navlist a"),secs=links.map(function(a){return $(a.getAttribute("href"))});
 function spy(){var y=window.scrollY+window.innerHeight*.3,cur=0;secs.forEach(function(s,i){if(s&&s.getBoundingClientRect().top+window.scrollY<=y)cur=i});
   links.forEach(function(a,i){a.classList.toggle("active",i===cur)});
-  var r=$(".rail"),act=links[cur];if(act&&window.innerWidth<=1080){var l=act.offsetLeft-r.clientWidth/2+act.clientWidth/2;if(Math.abs(r.scrollLeft-l)>40)r.scrollLeft=l}}
+  var r=$(".navlist"),act=links[cur];if(r&&act){var l=act.offsetLeft-r.clientWidth/2+act.clientWidth/2;if(Math.abs(r.scrollLeft-l)>40)r.scrollLeft=l}}
 window.addEventListener("scroll",spy,{passive:true});spy();
 })();

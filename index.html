@@ -4,180 +4,175 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>High-Impact Prompting with ChatGPT</title>
-<meta name="description" content="A two-hour, hands-on workshop on getting ChatGPT to the outcome you actually want.">
+<meta name="description" content="A hands-on workshop on getting ChatGPT to the outcome you actually want.">
+<meta name="theme-color" content="#0D1626">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
 </head>
 <body>
 
+<!-- ================= HERO ================= -->
 <header class="hero">
-  <div>
-    <div class="meta"><span><b>High-Impact Prompting with ChatGPT</b></span><span>WTPD workshop</span></div>
-    <h1>You don't need to know the route.<span class="quiet">You do need to know where you're going.</span></h1>
-    <p class="lede">A hands-on workshop. You'll see how ChatGPT actually behaves, try its tools, learn the practices that get better results, and leave with a high-impact prompt for something you really need to get done.</p>
-    <div class="ctas"><a class="btn" href="#welcome">Start here</a><a class="btn ghost" href="handout.html">Open the handout</a></div>
+  <div class="in">
+    <div class="hbar">
+      <span class="mark"><svg width="26" height="26" viewBox="0 0 22 22" aria-hidden="true"><circle cx="4" cy="18" r="2.6" fill="#fff"/><path d="M4 18 C 9 17, 9 9, 13 10 S 15 4, 18 4" fill="none" stroke="#7F95FF" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="4" r="2.6" fill="#7F95FF"/></svg>High-Impact Prompting</span>
+      <span>WTPD workshop with Josh Stutting</span>
+    </div>
+    <div class="hgrid">
+      <div>
+        <h1>You don't need to know the route. <em>You do need to know where you're going.</em></h1>
+        <p class="lede">A hands-on workshop on getting ChatGPT to the outcome you actually want. See how it really behaves, try its tools, learn the practices that hold up, and leave with a high-impact prompt for real work of your own.</p>
+        <div class="ctas"><a class="btn light" href="#welcome">Begin the workshop</a><a class="btn line" href="handout.html">Open the handout</a></div>
+      </div>
+      <svg class="routeArt" viewBox="0 0 440 330" role="img" aria-label="A route from start to destination that wanders off course and is steered back">
+        <path class="road" d="M30 290 C 120 280, 150 210, 210 190 S 330 120, 400 50"/>
+        <path class="path draw" style="--len:640" d="M30 290 C 110 282, 140 230, 190 205 C 240 180, 250 250, 300 268 C 345 284, 360 215, 330 170 C 305 132, 360 80, 400 50"/>
+        <path class="detour fadeIn" d="M250 236 C 290 262, 340 300, 410 300"/>
+        <circle cx="30" cy="290" r="7" fill="#fff"/>
+        <text x="30" y="318" text-anchor="middle">You</text>
+        <g class="fadeIn">
+          <text x="414" y="322" text-anchor="end" fill="#B4893A">where it wanted to go</text>
+          <path d="M400 50 c0 -15 -11 -24 -20 -24 s-20 9 -20 24 c0 14 20 32 20 32 s20 -18 20 -32z" transform="translate(20 -8)" fill="#7F95FF"/>
+          <circle cx="400" cy="16" r="6" fill="#0D1626"/>
+          <text class="pinLabel" x="355" y="80" text-anchor="end">Where you meant to go</text>
+        </g>
+      </svg>
+    </div>
+    <div class="leave" aria-label="What you'll leave with">
+      <div><p class="k">You'll leave with</p><h3>A plan for real work</h3><p>Your destination, decisions, context, and stages for something you actually need to finish.</p></div>
+      <div><p class="k">&nbsp;</p><h3>A reusable prompt</h3><p>A high-impact prompt written from your own conversation, tested in a fresh chat.</p></div>
+      <div><p class="k">&nbsp;</p><h3>A steering toolkit</h3><p>The short phrases and prompts that keep AI on course, ready to copy any time.</p></div>
+      <div><p class="k">&nbsp;</p><h3>A way of working</h3><p>A method that still works when the tools and features change.</p></div>
+    </div>
   </div>
-  <svg class="routeArt" viewBox="0 0 440 330" role="img" aria-label="A route from start to destination that wanders off course and is steered back">
-    <path class="road" d="M30 290 C 120 280, 150 210, 210 190 S 330 120, 400 50"/>
-    <path class="path draw" style="--len:640" d="M30 290 C 110 282, 140 230, 190 205 C 240 180, 250 250, 300 268 C 345 284, 360 215, 330 170 C 305 132, 360 80, 400 50"/>
-    <path class="detour fadeIn" d="M250 236 C 290 262, 340 300, 410 300"/>
-    <circle cx="30" cy="290" r="8" fill="#16212C"/>
-    <text x="30" y="318" text-anchor="middle">You</text>
-    <g class="fadeIn">
-      <text x="414" y="322" text-anchor="end" fill="#C98A0B">where it wanted to go</text>
-      <path d="M400 50 c0 -15 -11 -24 -20 -24 s-20 9 -20 24 c0 14 20 32 20 32 s20 -18 20 -32z" transform="translate(20 -8)" fill="#2B4ACB"/>
-      <circle cx="400" cy="16" r="6" fill="#fff"/>
-      <text class="pinLabel" x="355" y="80" text-anchor="end">Where you meant to go</text>
-    </g>
-  </svg>
 </header>
 
-<div class="promise" aria-label="What this workshop covers">
-  <div class="in">
-    <div class="p"><h2>How these models work</h2><p>What ChatGPT is really doing, and why it behaves the way it does. <a href="#fruit">Sections 1 to 3</a></p></div>
-    <div class="p"><h2>Best practices for prompting</h2><p>Know the destination, give the right context, steer the conversation. <a href="#finished">Sections 4 to 6</a></p></div>
-    <div class="p"><h2>Experiment with tools</h2><p>Files, data analysis, web search, voice, and images, each used for the right stage. <a href="#stages">Section 7</a></p></div>
-    <div class="p"><h2>Your high-impact prompt</h2><p>Make real progress on your own task and leave with a prompt you can reuse. <a href="#build">Sections 8 and 9</a></p></div>
-  </div>
-</div>
-
-<div class="shell">
-  <nav class="rail" aria-label="Workshop agenda">
-    <ol>
-      <li><a href="#welcome"><span class="dot">0</span><span>Welcome</span></a></li>
-      <li class="part" aria-hidden="true">How it works</li>
-      <li><a href="#fruit"><span class="dot">1</span><span>A bowl of fruit</span></a></li>
-      <li><a href="#how"><span class="dot">2</span><span>What ChatGPT is doing</span></a></li>
-      <li><a href="#gps"><span class="dot">3</span><span>AI is not a GPS</span></a></li>
-      <li class="part" aria-hidden="true">Best practices</li>
-      <li><a href="#finished"><span class="dot">4</span><span>What does finished look like?</span></a></li>
-      <li><a href="#context"><span class="dot">5</span><span>Context</span></a></li>
-      <li><a href="#cascade"><span class="dot">6</span><span>Steer the conversation</span></a></li>
-      <li class="part" aria-hidden="true">Tools and workflows</li>
-      <li><a href="#stages"><span class="dot">7</span><span>Bigger than one prompt</span></a></li>
-      <li class="part" aria-hidden="true">Your prompt</li>
-      <li><a href="#build"><span class="dot">8</span><span>Build something real</span></a></li>
-      <li><a href="#perfect"><span class="dot">9</span><span>Now write the perfect prompt</span></a></li>
-    </ol>
-    <div class="tools">
-      <button type="button" data-open-task>My task</button>
-      <a href="#phrasesHead">Steering phrases</a>
-      <a href="handout.html">Handout</a>
-    </div>
-  </nav>
-
-  <main>
-
-<!-- ============ 0 WELCOME ============ -->
-<section id="welcome">
-  <div class="sh"><span class="n">0</span><h2>Welcome.</h2></div>
-  <div class="body">
-    <p>This isn't about memorizing magic words. It's about getting better outcomes: knowing what you want, giving AI what it needs, and noticing when it takes you somewhere else.</p>
-    <div class="ex">
-      <h3>Get set up</h3>
-      <ol class="steps">
-        <li>Open <a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a> in a new tab and sign in. A free account works for everything today.</li>
-        <li>Keep this page open next to it and go back and forth as you work.</li>
-        <li>Start thinking about one real thing you'd like help finishing: an email, a plan, a schedule, a document, a decision. You'll pick it in section 4.</li>
-      </ol>
-      <p>Each prompt on this page tells you where it goes:</p>
-      <div class="legend"><span>Starts a new chat: <b>Open in ChatGPT</b> fills it in for you</span><span class="s">Paste into the chat you're already in</span><span class="a">Attach the practice files first</span></div>
-    </div>
-    <div class="callout"><b>One rule for today.</b> Don't paste anything confidential into ChatGPT: personal information, student or customer records, passwords, or internal documents you haven't been cleared to share. If your real task involves that kind of material, describe it instead of pasting it.</div>
-    <p class="hint">What you type on this page stays in your browser and builds into <b>My task</b>, a plan you can print or save as a PDF at the end.</p>
+<!-- ================= COURSE MAP ================= -->
+<section class="map" aria-labelledby="mapTitle">
+  <h2 id="mapTitle">Four parts. One way of working.</h2>
+  <p>Work through it in order. Every prompt opens straight into ChatGPT or copies with one click, and what you write builds into your own plan as you go.</p>
+  <div class="parts">
+    <div class="part"><span class="num">Part one</span><h3>How it works</h3><p>What ChatGPT is really doing, and why it behaves the way it does.</p>
+      <ol><li><a href="#fruit"><span>01</span>A bowl of fruit</a></li><li><a href="#how"><span>02</span>What it's actually doing</a></li><li><a href="#gps"><span>03</span>AI is not a GPS</a></li></ol></div>
+    <div class="part"><span class="num">Part two</span><h3>Best practices</h3><p>Know the destination, give the right context, steer the conversation.</p>
+      <ol><li><a href="#finished"><span>04</span>What finished looks like</a></li><li><a href="#context"><span>05</span>Context</a></li><li><a href="#cascade"><span>06</span>Steer the conversation</a></li></ol></div>
+    <div class="part"><span class="num">Part three</span><h3>Tools and workflows</h3><p>Files, data, web search, voice, and images, each used at the right stage.</p>
+      <ol><li><a href="#stages"><span>07</span>Bigger than one prompt</a></li></ol></div>
+    <div class="part"><span class="num">Part four</span><h3>Your prompt</h3><p>Make real progress on your own task and leave with a prompt you can reuse.</p>
+      <ol><li><a href="#build"><span>08</span>Build something real</a></li><li><a href="#perfect"><span>09</span>Write the perfect prompt</a></li><li><a href="#toolkit"><span>10</span>Your toolkit</a></li></ol></div>
   </div>
 </section>
 
-<!-- ============ 1 BOWL OF FRUIT (slides 2-5) ============ -->
-<section id="fruit">
-  <div class="sh"><span class="n">1</span><h2>Create a bowl of fruit.</h2></div>
-  <div class="body">
+<!-- ================= NAV ================= -->
+<nav class="nav" aria-label="Chapters">
+  <div class="in">
+    <a class="mark" href="#top" onclick="window.scrollTo({top:0});return false"><svg width="22" height="22" viewBox="0 0 22 22" aria-hidden="true"><circle cx="4" cy="18" r="2.6" fill="#0D1626"/><path d="M4 18 C 9 17, 9 9, 13 10 S 15 4, 18 4" fill="none" stroke="#3050E0" stroke-width="2" stroke-linecap="round"/><circle cx="18" cy="4" r="2.6" fill="#3050E0"/></svg><span>High-Impact Prompting</span></a>
+    <ul class="navlist">
+      <li><a href="#welcome"><span>00</span>Begin</a></li>
+      <li><a href="#fruit"><span>01</span>Bowl of fruit</a></li>
+      <li><a href="#how"><span>02</span>How it works</a></li>
+      <li><a href="#gps"><span>03</span>Not a GPS</a></li>
+      <li><a href="#finished"><span>04</span>Finished</a></li>
+      <li><a href="#context"><span>05</span>Context</a></li>
+      <li><a href="#cascade"><span>06</span>Steer</a></li>
+      <li><a href="#stages"><span>07</span>Stages and tools</a></li>
+      <li><a href="#build"><span>08</span>Build</a></li>
+      <li><a href="#perfect"><span>09</span>Perfect prompt</a></li>
+      <li><a href="#toolkit"><span>10</span>Toolkit</a></li>
+    </ul>
+    <button class="taskBtn" type="button" data-open-task aria-controls="drawer"><span>My plan</span><span class="meter" aria-hidden="true"><i id="meter"></i></span></button>
+  </div>
+</nav>
+
+<main>
+
+<!-- ================= 00 BEGIN ================= -->
+<section class="chapter" id="welcome">
+  <div class="opener"><div class="no">00</div><div><p class="part-of">Before you begin</p><h2>Better outcomes, not magic words.</h2><p class="promise">This workshop isn't about memorizing prompt formulas. It's about knowing what you want, giving AI what it needs, and noticing when it takes you somewhere else.</p></div></div>
+  <div class="flow">
     <div class="ex">
-      <h3>Round one</h3>
+      <div class="exh"><span class="tag">Setup</span><h3>Get ready</h3></div>
       <ol class="steps">
-        <li>Click <b>Open in ChatGPT</b>. Don't add a word.</li>
-        <li>Compare your image with the people around you.</li>
+        <li>Open <a href="https://chatgpt.com" target="_blank" rel="noopener">chatgpt.com</a> in a new tab and sign in. A free account works for everything here.</li>
+        <li>Keep this page open beside it. You'll move back and forth as you work.</li>
+        <li>Think of one real thing you'd like help finishing: an email, a plan, a schedule, a document, a decision. You'll choose it in chapter 04.</li>
       </ol>
+      <h4>How the prompts work</h4>
+      <p>Every prompt on this page shows where it goes:</p>
+      <div class="legend"><span><b>Starts a new chat.</b> Open in ChatGPT fills it in for you.</span><span class="s"><b>Paste into the same chat</b> you're already working in.</span><span class="a"><b>Attach the practice files first,</b> then paste.</span></div>
+    </div>
+    <div class="callout"><b>One rule.</b> Don't paste anything confidential into ChatGPT: personal information, student or customer records, passwords, or internal documents you haven't been cleared to share. If your task involves that kind of material, describe it instead of pasting it.</div>
+    <p class="hint">What you type here stays in your browser and builds into <b>My plan</b>, which you can print or save as a PDF at the end.</p>
+  </div>
+</section>
+
+<!-- ================= 01 BOWL ================= -->
+<section class="chapter" id="fruit">
+  <div class="opener"><div class="no">01</div><div><p class="part-of">Part one: How it works</p><h2>Create a bowl of fruit.</h2><p class="promise">One identical prompt, a room full of screens, and a lesson about who is really making the decisions.</p></div></div>
+  <div class="flow">
+    <div class="ex">
+      <div class="exh"><span class="tag">Exercise 1.1</span><h3>Round one</h3></div>
+      <ol class="steps"><li>Click <b>Open in ChatGPT</b>. Don't add a word.</li><li>Compare your image with the people around you.</li></ol>
 <div class="prompt" data-mode="new">Create an image of a bowl of fruit.</div>
-      <h3 style="margin-top:22px">What did you decide?</h3>
+      <h4>What did you decide?</h4>
       <p>For each choice, mark who actually made it.</p>
       <div class="tally" id="tally"></div>
       <p class="score" id="tallyScore"></p>
     </div>
 
-    <p class="key">AI fills in what you leave blank.</p>
+    <p class="quote">AI fills in what you leave blank.</p>
 
     <h3 class="statement">The risk of outsourcing decisions.</h3>
-    <p>The images in this room aren't identical, but they're probably not very different either. Most will be safe, polished versions of the same default. That's fine for a bowl of fruit. Now picture a proposal, a cover letter, or a lesson plan, and millions of people letting the same system make the same choices. Everyone's work starts to look the same.</p>
-    <div class="talk" style="border:0;padding-top:0">
-      <h4>Talk about it</h4>
-      <ul>
-        <li>Who chose the bowl? The fruit? The lighting, background, and style?</li>
-        <li>Which of those decisions actually mattered to you?</li>
-      </ul>
-    </div>
+    <p class="lead">The images in this room aren't identical, but they probably aren't very different either. Most are safe, polished versions of the same default.</p>
+    <p>That's fine for a bowl of fruit. Now picture a proposal, a cover letter, or a lesson plan, with millions of people letting the same system make the same choices. Everyone's work starts to look the same.</p>
+    <div class="talk"><h4>Talk about it</h4><ul><li>Who chose the bowl? The fruit? The lighting, background, and style?</li><li>Which of those decisions actually mattered to you?</li></ul></div>
 
     <div class="ex">
-      <h3>Round two: keep the decisions that matter</h3>
+      <div class="exh"><span class="tag">Exercise 1.2</span><h3>Keep the decisions that matter</h3></div>
       <p>Pick a purpose. Then decide <b>no more than three</b> things that purpose depends on, and leave the rest to the AI on purpose.</p>
       <div class="choices" id="purposes"></div>
       <label class="f" for="pd1">Decision 1</label><input type="text" id="pd1" data-k="pd1">
       <label class="f" for="pd2">Decision 2</label><input type="text" id="pd2" data-k="pd2">
       <label class="f" for="pd3">Decision 3 <span class="hint">optional</span></label><input type="text" id="pd3" data-k="pd3">
 <div class="prompt" id="purposePrompt" data-mode="same"></div>
-      <div class="talk">
-        <h4>Talk about it</h4>
-        <ul>
-          <li>Compare with someone who picked a different purpose. How much did three choices change?</li>
-          <li>Which decision did the most work?</li>
-        </ul>
-      </div>
+      <div class="talk"><h4>Talk about it</h4><ul><li>Compare with someone who picked a different purpose. How much did three choices change?</li><li>Which decision did the most work?</li></ul></div>
     </div>
-    <p class="key">The point isn't more detail. It's keeping the decisions that matter.</p>
+
+    <div class="remember"><h4>Remember</h4><ul><li>AI fills in what you leave blank.</li><li>The point isn't more detail. It's keeping the decisions that matter, and handing off the rest on purpose.</li></ul></div>
   </div>
 </section>
 
-<!-- ============ 2 HOW IT WORKS (course description) ============ -->
-<section id="how">
-  <div class="sh"><span class="n">2</span><h2>What ChatGPT is actually doing.</h2></div>
-  <div class="body">
-    <p>You don't need the math. You need to know enough about how it works to predict how it will behave. Every habit in the rest of this workshop comes from one of these.</p>
+<!-- ================= 02 HOW ================= -->
+<section class="chapter" id="how">
+  <div class="opener"><div class="no">02</div><div><p class="part-of">Part one: How it works</p><h2>What ChatGPT is actually doing.</h2><p class="promise">You don't need the math. You need to know enough about how it works to predict how it will behave.</p></div></div>
+  <div class="flow">
     <ul class="facts">
-      <li><div><h3>It predicts. It doesn't know.</h3><p>A large language model writes the most likely next words, based on patterns from an enormous amount of text. Most likely isn't the same as true, and it isn't the same as yours.</p></div><div class="so"><b>So</b>Leave it blanks and you get the average. That's your bowl of fruit.</div></li>
-      <li><div><h3>Every answer is a new draw.</h3><p>Ask the same thing twice and you'll get a different answer. There's no single "right" response waiting inside it.</p></div><div class="so"><b>So</b>Don't treat the first answer as the answer. Ask for options.</div></li>
-      <li><div><h3>It only works with what's in front of it.</h3><p>The conversation, the files you attach, search results, and anything saved in its memory. It doesn't know your job, your audience, or what you decided last week unless you say so.</p></div><div class="so"><b>So</b>Context is the biggest lever you have. That's section 5.</div></li>
-      <li><div><h3>Long conversations get crowded.</h3><p>Everything said so far shapes the next answer. As a chat grows, early decisions carry less weight, and eventually it runs out of room.</p></div><div class="so"><b>So</b>When things start to feel off, start fresh. That's section 3.</div></li>
-      <li><div><h3>It's built to keep going.</h3><p>It's tuned to be helpful and agreeable. It rarely says "I'm not sure" or "this isn't what you asked for" unless you ask, and it can make a wrong turn sound reasonable.</p></div><div class="so"><b>So</b>You have to own the destination. It won't.</div></li>
-      <li><div><h3>It can use tools.</h3><p>Search the web, read files, analyze spreadsheets, make images, listen to your voice. Tools change what it can see in the moment.</p></div><div class="so"><b>So</b>Pick the right tool for each stage. That's section 7.</div></li>
+      <li><span class="fn">1</span><div><h3>It predicts. It doesn't know.</h3><p>A large language model writes the most likely next words, based on patterns from an enormous amount of text. Most likely isn't the same as true, and it isn't the same as yours.</p></div><div class="so"><b>So</b>Leave it blanks and you get the average. That's your bowl of fruit.</div></li>
+      <li><span class="fn">2</span><div><h3>Every answer is a new draw.</h3><p>Ask the same thing twice and you'll get a different answer. There's no single "right" response waiting inside it.</p></div><div class="so"><b>So</b>Don't treat the first answer as the answer. Ask for options.</div></li>
+      <li><span class="fn">3</span><div><h3>It only works with what's in front of it.</h3><p>The conversation, the files you attach, search results, and anything saved in its memory. It doesn't know your job, your audience, or what you decided last week unless you tell it.</p></div><div class="so"><b>So</b>Context is the biggest lever you have. Chapter 05.</div></li>
+      <li><span class="fn">4</span><div><h3>Long conversations get crowded.</h3><p>Everything said so far shapes the next answer. As a chat grows, early decisions carry less weight, and eventually it runs out of room.</p></div><div class="so"><b>So</b>When things feel off, start fresh. Chapter 03.</div></li>
+      <li><span class="fn">5</span><div><h3>It's built to keep going.</h3><p>It's tuned to be helpful and agreeable. It rarely says "I'm not sure" or "this isn't what you asked for" unless you ask, and it can make a wrong turn sound reasonable.</p></div><div class="so"><b>So</b>You have to own the destination. It won't.</div></li>
+      <li><span class="fn">6</span><div><h3>It can use tools.</h3><p>Search the web, read files, analyze spreadsheets, make images, listen to your voice. Tools change what it can see in the moment.</p></div><div class="so"><b>So</b>Pick the right tool for each stage. Chapter 07.</div></li>
     </ul>
     <div class="ex">
-      <h3>See it for yourself</h3>
-      <ol class="steps">
-        <li>Open this in a new chat.</li>
-      </ol>
+      <div class="exh"><span class="tag">Exercise 2.1</span><h3>See it for yourself</h3></div>
 <div class="prompt" data-mode="new">In one sentence, suggest something to do this Saturday afternoon.</div>
-      <ol class="steps" start="2">
-        <li>Under the answer, click the <b>Try again</b> button (the circular arrows) twice. Same prompt, three different answers.</li>
-        <li>Then ask it to show its hidden decisions:</li>
-      </ol>
+      <ol class="steps"><li>Under the answer, click <b>Try again</b> (the circular arrows) twice. Same prompt, three different answers.</li><li>Then ask it to show the decisions it made for you:</li></ol>
 <div class="prompt" data-mode="same">What did you assume about me to give that answer?</div>
     </div>
+    <div class="remember"><h4>Remember</h4><ul><li>It predicts. It doesn't know.</li><li>Every answer is a new draw.</li><li>It only works with what's in front of it.</li></ul></div>
   </div>
 </section>
 
-<!-- ============ 3 GPS (slides 6-8) ============ -->
-<section id="gps">
-  <div class="sh"><span class="n">3</span><h2>AI is not a GPS.</h2></div>
-  <div class="body">
-    <p>A GPS reroutes you when you miss a turn, but it never changes your destination. AI can change both the route and the destination, then give you a convincing explanation for why the new destination was better all along. Drift is easy to see in a picture. So let's watch it happen.</p>
+<!-- ================= 03 GPS ================= -->
+<section class="chapter" id="gps">
+  <div class="opener"><div class="no">03</div><div><p class="part-of">Part one: How it works</p><h2>AI is not a GPS.</h2><p class="promise">A GPS reroutes you when you miss a turn, but it never changes your destination. AI can change both, then explain why the new destination was better all along.</p></div></div>
+  <div class="flow">
+    <p class="lead">Drift is easy to see in a picture, so let's watch it happen.</p>
     <div class="ex">
-      <h3>Five small edits</h3>
-      <ol class="steps">
-        <li>Go back to your bowl-of-fruit chat from round two.</li>
-        <li>Ask for five edits, one at a time. Each changes <b>one thing only</b>. Tap an idea to copy it, or write your own.</li>
-        <li>After each edit, write down anything else that changed that you didn't ask for.</li>
-      </ol>
+      <div class="exh"><span class="tag">Exercise 3.1</span><h3>Five small edits</h3></div>
+      <ol class="steps"><li>Go back to your bowl-of-fruit chat from exercise 1.2.</li><li>Ask for five edits, one at a time, each changing <b>one thing only</b>. Tap an idea to copy it, or write your own.</li><li>After each edit, write down anything else that changed that you didn't ask for.</li></ol>
       <div class="chips">
         <button class="chip" type="button" data-chip="Make the bowl blue glass. Keep everything else exactly the same.">Make the bowl blue glass</button>
         <button class="chip" type="button" data-chip="Add one banana. Keep everything else exactly the same.">Add one banana</button>
@@ -189,42 +184,37 @@
       <label class="f" for="driftCompare">Put your first image next to your fifth. What's different that you never asked for?</label>
       <textarea id="driftCompare" data-k="driftCompare" placeholder="The table went from wood to marble, the light moved, there are twice as many grapes..."></textarea>
     </div>
-    <p class="key drift">AI can change the destination one reasonable-looking step at a time.</p>
+
+    <p class="quote gold">AI can change the destination one reasonable-looking step at a time.</p>
     <p>Each edit is a brand-new image guided by everything said so far, so small unrequested changes stack up. The same thing happens in an email, a plan, or a spreadsheet. It's just harder to see.</p>
 
     <h3 class="statement">When things seem off, start a new conversation.</h3>
     <ul class="signs">
-      <li>It brings back a mistake you already fixed</li>
-      <li>It forgets something you decided earlier</li>
-      <li>It changes things you didn't ask about</li>
-      <li>Answers get longer, vaguer, or more generic</li>
-      <li>You're arguing with it instead of building</li>
-      <li>You can't remember what you agreed on either</li>
+      <li>It brings back a mistake you already fixed</li><li>It forgets something you decided earlier</li>
+      <li>It changes things you didn't ask about</li><li>Answers get longer, vaguer, or more generic</li>
+      <li>You're arguing with it instead of building</li><li>You can't remember what you agreed on either</li>
     </ul>
     <div class="ex">
-      <h3>Start fresh without losing your work</h3>
-      <p>In the bowl chat, send this. Then open a new chat, paste the summary in, and ask for the image again. Is it closer to what you meant than edit five?</p>
+      <div class="exh"><span class="tag">Exercise 3.2</span><h3>Start fresh without losing your work</h3></div>
+      <p>Send this in your bowl chat. Then open a new chat, paste the summary, and ask for the image again. Is it closer to what you meant than edit five?</p>
 <div class="prompt" data-mode="same">Summarize what we've decided so far: the goal, the decisions we've locked in, the context that matters, and what's still open. Write it so I can paste it into a brand-new conversation and pick up exactly where we left off.</div>
     </div>
 
-    <h3 class="statement">You don't need to know the route.</h3>
-    <p class="key" style="margin-top:8px">You do need to know the destination.</p>
+    <h3 class="statement">You don't need to know the route. You do need to know the destination.</h3>
     <h3 class="statement">One great question, or twenty ordinary ones.</h3>
-    <p>Both can get you to the same place, as long as the destination doesn't move. The skill isn't perfect wording. It's knowing where you're going well enough to notice when the AI isn't taking you there.</p>
+    <p class="lead">Both can get you to the same place, as long as the destination doesn't move. The skill isn't perfect wording. It's knowing where you're going well enough to notice when the AI isn't taking you there.</p>
+    <div class="remember"><h4>Remember</h4><ul><li>AI can change the destination and make it sound reasonable.</li><li>When it feels off, start fresh and carry your decisions forward.</li></ul></div>
   </div>
 </section>
 
-<!-- ============ 4 FINISHED (slide 9) ============ -->
-<section id="finished">
-  <div class="sh"><span class="n">4</span><h2>What does "finished" look like?</h2></div>
-  <div class="body">
-    <p>Before you think about how to word anything, decide what done looks like. A vague request can still work if <em>you</em> know where you're going. A polished prompt aimed at a fuzzy destination gets you a polished wrong answer.</p>
-    <div class="compare">
-      <div class="weak"><b>Vague</b>"Help me with onboarding."</div>
-      <div class="strong"><b>Clear destination</b>"When this is finished, our shift lead can run a new hire's first week from one page."</div>
-    </div>
+<!-- ================= 04 FINISHED ================= -->
+<section class="chapter" id="finished">
+  <div class="opener"><div class="no">04</div><div><p class="part-of">Part two: Best practices</p><h2>What does "finished" look like?</h2><p class="promise">Before you think about wording, decide what done looks like. This is where your real task begins.</p></div></div>
+  <div class="flow">
+    <p class="lead">A vague request can still work if <em>you</em> know where you're going. A polished prompt aimed at a fuzzy destination gets you a polished wrong answer.</p>
+    <div class="compare"><div><b>Vague</b>"Help me with onboarding."</div><div class="strong"><b>Clear destination</b>"When this is finished, our shift lead can run a new hire's first week from one page."</div></div>
     <div class="ex">
-      <h3>Define your destination</h3>
+      <div class="exh"><span class="tag">Exercise 4.1</span><h3>Define your destination</h3></div>
       <p>Choose something you actually need to finish. You'll keep working on it through the rest of the workshop.</p>
       <label class="f" for="task">What are you working on?</label>
       <input type="text" id="task" data-k="task" placeholder="A welcome guide for new volunteers at our food pantry">
@@ -238,29 +228,34 @@
       <label class="f" for="keep">Decisions I'm keeping for myself <span class="hint">the choices you won't hand to the AI</span></label>
       <textarea id="keep" data-k="keep" placeholder="Friendly, not corporate. Fits on one sheet, front and back. Safety rules come first."></textarea>
     </div>
+    <div class="remember"><h4>Remember</h4><ul><li>You don't need the route. You need the destination.</li><li>Write down what finished looks like before you write a prompt.</li></ul></div>
   </div>
 </section>
 
-<!-- ============ 5 CONTEXT (slides 10-14) ============ -->
-<section id="context">
-  <div class="sh"><span class="n">5</span><h2>Context.</h2></div>
-  <div class="body">
-    <h3 class="statement" style="margin-top:0">Prompt engineering vs. context engineering.</h3>
-    <div class="compare">
-      <div class="weak"><b>Prompt engineering asks</b>"What words should I use?"</div>
-      <div class="strong"><b>Context engineering asks</b>"What does the AI need to know to help me succeed?"</div>
-    </div>
+<!-- ================= 05 CONTEXT ================= -->
+<section class="chapter" id="context">
+  <div class="opener"><div class="no">05</div><div><p class="part-of">Part two: Best practices</p><h2>Context.</h2><p class="promise">The biggest lever you have isn't clever wording. It's what the AI knows when it starts working.</p></div></div>
+  <div class="flow">
+    <h3 class="statement first">Prompt engineering vs. context engineering.</h3>
+    <div class="compare"><div><b>Prompt engineering asks</b>"What words should I use?"</div><div class="strong"><b>Context engineering asks</b>"What does the AI need to know to help me succeed?"</div></div>
+
     <h3 class="statement">What counts as context?</h3>
-    <p>Goal and success criteria. Audience and purpose. Source documents and evidence. Examples of good or bad output. Constraints and non-negotiables. History and previous decisions. What's already been tried. Policies or rules. Tone, format, and where the result will be used.</p>
-    <p class="key">Every blank becomes a decision.</p>
-    <p>You can't fill in every blank, and you shouldn't. Context is how you choose which decisions to keep and which ones to hand over on purpose.</p>
+    <div class="ctxCats">
+      <div><span>01</span>Goal and success criteria</div><div><span>02</span>Audience and purpose</div><div><span>03</span>Source documents and evidence</div>
+      <div><span>04</span>Examples of good or bad output</div><div><span>05</span>Constraints and non-negotiables</div><div><span>06</span>History and previous decisions</div>
+      <div><span>07</span>What's already been tried</div><div><span>08</span>Policies or rules</div><div><span>09</span>Tone, format, and where it's used</div>
+    </div>
+
+    <p class="quote">Every blank becomes a decision.</p>
+    <p>You can't fill in every blank, and you shouldn't. Context is how you choose which decisions to keep and which to hand over on purpose.</p>
 
     <div class="ex">
-      <h3>Same task, different context</h3>
+      <div class="exh"><span class="tag">Exercise 5.1</span><h3>Same task, different context</h3></div>
       <p>Flat Cap Co. makes camouflage flat caps for the whole family, pets included. They're changing their return policy.</p>
-      <p><b>Round one.</b> Just this:</p>
+      <h4>Round one</h4>
 <div class="prompt" data-mode="new">Write an announcement about a policy change.</div>
-      <p><b>Round two.</b> Choose who it's for. The prompt below already includes the memo.</p>
+      <h4>Round two</h4>
+      <p>Choose who it's for. The prompt below already includes the memo.</p>
       <div class="seg" role="group" aria-label="Audience" id="audSeg"><button type="button" data-aud="staff">Support staff</button><button type="button" data-aud="cust">Customers</button></div>
       <div class="doc" id="memo">
         <div class="dh">Memo from Felix Bramble, Operations. November 2, 2026.</div>
@@ -270,48 +265,41 @@
         <p style="margin:0"><b>Staff action:</b> Finish the 10-minute reason-code guide by November 24. Questions go to Lindsay Draper.</p>
       </div>
 <div class="prompt" id="ctxPrompt" data-mode="new"></div>
-      <div class="talk">
-        <h4>Talk about it</h4>
-        <ul>
-          <li>What did round one make up?</li>
-          <li>Compare with someone who chose the other audience. Same facts, how different is it?</li>
-          <li>Which single piece of context changed the result the most?</li>
-        </ul>
-      </div>
+      <div class="talk"><h4>Talk about it</h4><ul><li>What did round one make up?</li><li>Compare with someone who chose the other audience. Same facts, how different is it?</li><li>Which single piece of context changed the result the most?</li></ul></div>
     </div>
 
     <h3 class="statement">Specificity beats volume.</h3>
-    <p>A long prompt isn't automatically a good one. A useful detail rules out wrong answers. Irrelevant detail is just noise.</p>
+    <p class="lead">A long prompt isn't automatically a good one. A useful detail rules out wrong answers. Irrelevant detail is just noise.</p>
 
     <div class="ex">
-      <h3>Now your task</h3>
-      <p>Check what the AI would need to know about <b data-show="task">your task</b>. Add a quick note for each one you check. Skip anything that wouldn't change the result.</p>
+      <div class="exh"><span class="tag">Exercise 5.2</span><h3>Context for your task</h3></div>
+      <p>Check what the AI would need to know about <b data-show="task">your task</b>. Add a quick note for each one you check, and skip anything that wouldn't change the result.</p>
       <div id="ctxList"></div>
-      <p style="margin-top:20px">Don't know what you're missing? Let the AI interview you. This opens a new chat with your task filled in:</p>
+      <h4>Let it interview you</h4>
+      <p>Not sure what you're missing? This opens a new chat with your task filled in. Keep that chat open for the next chapter.</p>
 <div class="prompt" id="qfPrompt" data-mode="new"></div>
-      <p class="hint">Keep this chat open. You'll steer it in the next section.</p>
     </div>
+    <div class="remember"><h4>Remember</h4><ul><li>Ask what the AI needs to know, not which words to use.</li><li>Specificity beats volume.</li></ul></div>
   </div>
 </section>
 
-<!-- ============ 6 CASCADE (slides 15-19) ============ -->
-<section id="cascade">
-  <div class="sh"><span class="n">6</span><h2>Stop trying to write the perfect prompt.</h2></div>
-  <div class="body">
-    <p>Most good results don't come from one giant prompt. They come from a conversation: start with the problem, react to what comes back, add what's missing, reject what's wrong, keep what's good.</p>
-    <h3 class="statement">Cascading work.</h3>
-    <div class="chain"><span>Idea</span><i>→</i><span>Conversation</span><i>→</i><span>Clarification</span><i>→</i><span>Context</span><i>→</i><span>Sources</span><i>→</i><span>Structure</span><i>→</i><span>Creation</span><i>→</i><span>Critique</span><i>→</i><span>Refinement</span><i>→</i><span>Final product</span></div>
-    <p class="key">Conversation is not failure.</p>
-    <p>Needing ten prompts doesn't mean you did it wrong. The middle turns are often where you figure out what the real problem is and what the result needs to be.</p>
+<!-- ================= 06 CASCADE ================= -->
+<section class="chapter" id="cascade">
+  <div class="opener"><div class="no">06</div><div><p class="part-of">Part two: Best practices</p><h2>Stop trying to write the perfect prompt.</h2><p class="promise">Most good results come from a conversation: start with the problem, react, add what's missing, reject what's wrong, keep what's good.</p></div></div>
+  <div class="flow">
+    <h3 class="statement first">Cascading work.</h3>
+    <div class="chain"><span>Idea</span><i></i><span>Conversation</span><i></i><span>Clarification</span><i></i><span>Context</span><i></i><span>Sources</span><i></i><span>Structure</span><i></i><span>Creation</span><i></i><span>Critique</span><i></i><span>Refinement</span><i></i><span>Final product</span></div>
+    <p class="quote">Conversation is not failure.</p>
+    <p>Needing ten prompts doesn't mean you did it wrong. The middle turns are often where you find out what the real problem is and what the result needs to be.</p>
 
     <h3 class="statement" id="phrasesHead">How to steer casually.</h3>
     <p>Short and plain works. Copy these into your conversation and check off the ones you use.</p>
     <ul class="phrases" id="phrases"></ul>
 
-    <h3 class="statement">Live cascade.</h3>
-    <p>Here's a real, slightly messy conversation, wrong turns included. Step through it and watch where the AI fills in blanks, and where it tries to move the destination.</p>
+    <h3 class="statement">A live cascade.</h3>
+    <p>A real, slightly messy conversation, wrong turns included. Watch where the AI fills in blanks, and where it tries to move the destination.</p>
     <details class="example">
-      <summary>Example: onboarding new hires at a 12-person machine shop</summary>
+      <summary>Onboarding new hires at a 12-person machine shop</summary>
       <div class="in">
         <div class="chat" id="chat" aria-live="polite"></div>
         <div id="moveNote"></div>
@@ -320,93 +308,86 @@
     </details>
 
     <div class="ex">
-      <h3>Your turn</h3>
-      <ol class="steps">
-        <li>Go back to the chat where the AI interviewed you about your task.</li>
-        <li>Answer its questions, then let it start. React to what comes back using at least three steering phrases.</li>
-        <li>Every few turns, check it against your destination: <b data-show="dest"></b></li>
-      </ol>
+      <div class="exh"><span class="tag">Exercise 6.1</span><h3>Steer your own conversation</h3></div>
+      <ol class="steps"><li>Go back to the chat where the AI interviewed you about your task.</li><li>Answer its questions, then let it start. React using at least three steering phrases.</li><li>Every few turns, check it against your destination: <b data-show="dest"></b></li></ol>
     </div>
+    <div class="remember"><h4>Remember</h4><ul><li>Conversation is not failure.</li><li>Steer with short, plain phrases.</li><li>Keep checking the destination.</li></ul></div>
   </div>
 </section>
 
-
-<!-- ============ 7 STAGES + TOOLS (slides 21-27) ============ -->
-<section id="stages">
-  <div class="sh"><span class="n">7</span><h2>Some problems are bigger than one prompt.</h2></div>
-  <div class="body">
-    <p>Once a task takes more than one exchange, stop treating it as a prompt problem. Break it into stages.</p>
-    <h3 class="statement">Think in stages.</h3>
-    <div class="chain"><span>Understand</span><i>→</i><span>Gather</span><i>→</i><span>Evaluate</span><i>→</i><span>Plan</span><i>→</i><span>Create</span><i>→</i><span>Review</span><i>→</i><span>Revise</span><i>→</i><span>Deliver</span></div>
+<!-- ================= 07 STAGES ================= -->
+<section class="chapter" id="stages">
+  <div class="opener"><div class="no">07</div><div><p class="part-of">Part three: Tools and workflows</p><h2>Some problems are bigger than one prompt.</h2><p class="promise">Once a task takes more than one exchange, stop treating it as a prompt problem. Break it into stages, and give each stage the right context and the right tool.</p></div></div>
+  <div class="flow">
+    <h3 class="statement first">Think in stages.</h3>
+    <div class="chain"><span>Understand</span><i></i><span>Gather</span><i></i><span>Evaluate</span><i></i><span>Plan</span><i></i><span>Create</span><i></i><span>Review</span><i></i><span>Revise</span><i></i><span>Deliver</span></div>
 
     <h3 class="statement">Different stages need different context, and different tools.</h3>
-    <p>Gathering needs your sources. Evaluating needs data. Creating needs examples and tone. Reviewing needs the goal. ChatGPT has a tool for each. <b>Pick a station and try it.</b></p>
+    <p class="lead">Gathering needs your sources. Evaluating needs data. Creating needs examples and tone. Reviewing needs the goal. ChatGPT has a tool for each. Pick a station and try it.</p>
 
     <div class="stations">
       <div class="station">
-        <h3>Files</h3>
-        <p class="for">For gathering. Your source material becomes its working environment.</p>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3050E0" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/><path d="M14 3v6h6M8 13h8M8 17h5"/></svg></div>
+        <h3>Files</h3><p class="for">For gathering. Your source material becomes its working environment.</p>
         <div class="dl"><a href="files/FlatCap_Meeting_Notes_Q1.txt" download>Meeting notes</a><a href="files/FlatCap_Transcript_Excerpt.txt" download>Meeting transcript</a></div>
 <div class="prompt" data-mode="attach">Using only these two files, list every action item with its owner and due date. After each one, quote the line it came from. Then tell me anything the two files disagree on.</div>
-        <p class="check"><b>Check it:</b> open the meeting notes and confirm two of the action items yourself.</p>
+        <p class="check"><b>Check it</b>Open the meeting notes and confirm two of the action items yourself.</p>
       </div>
       <div class="station">
-        <h3>Data analysis</h3>
-        <p class="for">For evaluating. It runs real calculations on your spreadsheet.</p>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3050E0" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg></div>
+        <h3>Data analysis</h3><p class="for">For evaluating. It runs real calculations on your spreadsheet.</p>
         <div class="dl"><a href="files/FlatCap_Returns_Data.xlsx" download>Returns spreadsheet</a></div>
 <div class="prompt" data-mode="attach">Analyze this returns spreadsheet. Show the number of returns by reason as a table and a bar chart. A meeting summary claimed "fit not as expected" was the top return reason at 38%. Does this data support that? Tell me what you'd check before trusting either one.</div>
-        <p class="check"><b>Check it:</b> did it notice the Warehouse Notes column is nonsense, and that this data doesn't back up the meeting's claim?</p>
+        <p class="check"><b>Check it</b>Did it notice the Warehouse Notes column is nonsense, and that this data doesn't back up the meeting's claim?</p>
       </div>
       <div class="station">
-        <h3>Web search</h3>
-        <p class="for">For gathering current facts it couldn't know on its own.</p>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3050E0" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg></div>
+        <h3>Web search</h3><p class="for">For gathering current facts it couldn't know on its own.</p>
 <div class="prompt" id="webPrompt" data-mode="new"></div>
-        <p class="check"><b>Check it:</b> open one link. Does the page actually say what ChatGPT said it does?</p>
+        <p class="check"><b>Check it</b>Open one link. Does the page actually say what ChatGPT said it does?</p>
       </div>
       <div class="station">
-        <h3>Voice</h3>
-        <p class="for">For understanding. Talking is often the fastest way to get context out of your head.</p>
-        <p style="font-size:15.5px">In the ChatGPT phone app, tap the voice button and explain your task out loud for two minutes, the way you'd tell a coworker. Then say:</p>
+        <div class="ic"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3050E0" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg></div>
+        <h3>Voice</h3><p class="for">For understanding. Talking is often the fastest way to get context out of your head.</p>
+        <p>In the ChatGPT phone app, tap the voice button and explain your task out loud for two minutes, the way you'd tell a coworker. Then say:</p>
 <div class="prompt" data-mode="same">Turn what I just said into a clear list: my goal, my constraints, the decisions I've made, and the questions I still need to answer.</div>
-        <p class="check"><b>Check it:</b> did it capture what you meant, or fill in gaps you never mentioned?</p>
+        <p class="check"><b>Check it</b>Did it capture what you meant, or fill in gaps you never mentioned?</p>
       </div>
     </div>
-    <p class="hint">Images were section 1. Features change over time. Choosing the right capability for the stage doesn't.</p>
+    <p class="hint">Images were chapter 01. Features change over time. Choosing the right capability for the stage doesn't.</p>
 
     <h3 class="statement">AI doesn't have to do every step.</h3>
     <div class="split">
       <div class="ai"><h3>Good jobs for AI</h3><ul><li>First drafts and rewrites</li><li>Summarizing sources</li><li>Generating options</li><li>Reformatting and organizing</li><li>First-pass analysis</li><li>Critique against your goal</li></ul></div>
-      <div class="human"><h3>Stays with you</h3><ul><li>The destination</li><li>Priorities and trade-offs</li><li>Approvals</li><li>Ethical calls</li><li>Checking facts you'll stand behind</li><li>Responsibility for the final result</li></ul></div>
+      <div class="human"><h3>Stays with you</h3><ul><li>The destination</li><li>Priorities and trade-offs</li><li>Approvals</li><li>Ethical calls</li><li>Checking facts you'll stand behind</li><li>Responsibility for the result</li></ul></div>
     </div>
 
     <h3 class="statement">Start at the end.</h3>
-    <p>For bigger work, begin with "what does finished look like?" and design backward. What has to exist right before the finished product? What information does that need, and where does it come from? What should AI do, and what should you decide?</p>
+    <p class="lead">For bigger work, begin with "what does finished look like?" and design backward. What has to exist right before the finished product? What information does that need, and where does it come from? What should AI do, and what should you decide?</p>
     <div class="ex">
-      <h3>Reverse-design your workflow</h3>
+      <div class="exh"><span class="tag">Exercise 7.1</span><h3>Reverse-design your workflow</h3></div>
       <div class="finishLine"><small>Finished</small><span data-show="dest"></span></div>
-      <p style="margin-top:16px">Work backward. Each stage you add goes <b>before</b> the ones you already have. Three or four stages is plenty.</p>
+      <p style="margin-top:20px">Work backward. Each stage you add goes <b>before</b> the ones you already have. Three or four stages is plenty.</p>
       <div class="chips" id="stageIdeas"><button class="chip" type="button">Deliver</button><button class="chip" type="button">Review</button><button class="chip" type="button">Create</button><button class="chip" type="button">Plan</button><button class="chip" type="button">Evaluate</button><button class="chip" type="button">Gather</button><button class="chip" type="button">Understand</button></div>
       <div id="stageList"></div>
       <button class="btn small ghost" type="button" id="addStage">Add a stage before these</button>
     </div>
-    <p class="key">A prompt is a component, not the system.</p>
+
+    <p class="quote">A prompt is a component, not the system.</p>
     <p>The prompt is one instruction inside a workflow. The AI is one part of a system made of people, tools, and checks. You keep the destination, the approvals, and the responsibility.</p>
+    <div class="remember"><h4>Remember</h4><ul><li>Different stages need different context and tools.</li><li>AI doesn't have to do every step.</li><li>Design backward from finished.</li></ul></div>
   </div>
 </section>
 
-<!-- ============ 8 BUILD (slide 28) ============ -->
-<section id="build">
-  <div class="sh"><span class="n">8</span><h2>Build something real.</h2></div>
-  <div class="body">
-    <p>The goal isn't to write a good prompt. It's to make real progress on something you need. This starting prompt is built from everything you've entered so far: your destination, your decisions, your context, and your stages.</p>
+<!-- ================= 08 BUILD ================= -->
+<section class="chapter" id="build">
+  <div class="opener"><div class="no">08</div><div><p class="part-of">Part four: Your prompt</p><h2>Build something real.</h2><p class="promise">The goal isn't to write a good prompt. It's to make real progress on something you need.</p></div></div>
+  <div class="flow">
     <div class="ex">
-      <h3>Your starting prompt</h3>
+      <div class="exh"><span class="tag">Exercise 8.1</span><h3>Your starting prompt</h3></div>
+      <p>Built from everything you've entered: your destination, your decisions, your context, and your stages.</p>
 <div class="prompt" data-start data-mode="new"></div>
-      <ol class="steps">
-        <li>Open it in a new chat. Attach source files if you have them, after checking the one rule.</li>
-        <li>Work through your first stage. Steer. Keep what's good.</li>
-        <li>If the conversation starts to feel off, use the start-fresh prompt from section 3.</li>
-      </ol>
+      <ol class="steps"><li>Open it in a new chat. Attach source files if you have them, after checking the one rule.</li><li>Work through your first stage. Steer. Keep what's good.</li><li>If the conversation starts to feel off, use the start-fresh prompt from chapter 03.</li></ol>
     </div>
     <h3 class="statement">Before anything leaves your screen.</h3>
     <ul class="check">
@@ -418,44 +399,72 @@
   </div>
 </section>
 
-<!-- ============ 9 PERFECT PROMPT (slides 29-30) ============ -->
-<section id="perfect">
-  <div class="sh"><span class="n">9</span><h2>Now write the perfect prompt.</h2></div>
-  <div class="body">
-    <p>Here's the twist. The "perfect prompt" is easy to write once you've explored the problem and know where you're going. So let the AI write it.</p>
+<!-- ================= 09 PERFECT ================= -->
+<section class="chapter" id="perfect">
+  <div class="opener"><div class="no">09</div><div><p class="part-of">Part four: Your prompt</p><h2>Now write the perfect prompt.</h2><p class="promise">The "perfect prompt" is easy to write once you've explored the problem and know where you're going. So let the AI write it.</p></div></div>
+  <div class="flow">
     <div class="ex">
-      <h3>Turn your conversation into a high-impact prompt</h3>
+      <div class="exh"><span class="tag">Exercise 9.1</span><h3>Turn your conversation into a high-impact prompt</h3></div>
       <p>In the chat where you built your task, send this:</p>
 <div class="prompt" data-mode="same">Review everything we did in this conversation. Write the single prompt that could have produced something close to our final result from the beginning. Then explain which parts of that prompt mattered most and why.</div>
-      <label class="f" for="tbPrompt">Paste the prompt it wrote here <span class="hint">it's yours to reuse</span></label>
-      <textarea id="tbPrompt" data-k="tbPrompt" style="min-height:120px"></textarea>
-      <p style="margin-top:14px"><b>Then test it.</b> Paste that prompt into a <b>new chat</b>. If it gets close, you have a reusable prompt. If it doesn't, you've just seen how much the conversation was doing.</p>
+      <label class="f" for="tbPrompt">Paste the prompt it wrote <span class="hint">it's yours to reuse</span></label>
+      <textarea id="tbPrompt" data-k="tbPrompt" style="min-height:130px"></textarea>
+      <h4>Then test it</h4>
+      <p>Paste that prompt into a <b>new chat</b>. If it gets close, you have a reusable prompt. If it doesn't, you've just seen how much the conversation was doing.</p>
       <label class="f" for="tbResult">What happened when you tested it?</label>
       <textarea id="tbResult" data-k="tbResult" placeholder="Close, but it missed the tone we landed on..."></textarea>
     </div>
-
-    <div class="model7" aria-label="The model"><span>Destination</span><i></i><span>Decisions</span><i></i><span>Context</span><i></i><span>Cascade</span><i></i><span>Workflow</span><i></i><span>System</span><i></i><span>Product</span></div>
-    <p class="statement" style="font-size:clamp(24px,2.8vw,32px)">High-impact prompting isn't the art of finding magic words. It's knowing the outcome you want, keeping the decisions that matter, giving AI the context it needs, steering it through a conversation, and building a workflow that reliably gets you there. AI can help find the route. You own the destination.</p>
-    <div class="ctas" style="margin-top:24px"><button class="btn" type="button" data-print>Print or save my plan</button><a class="btn ghost" href="handout.html">Open the handout</a></div>
-
-    <div class="nextClass">
-      <h3>Next session: Advanced Prompts for Business Success</h3>
-      <p style="margin:0">Tuesday, December 8, 8:30 to 10:30 AM, Room A107. Microsoft Copilot, prompts for core business challenges, more AI tools, and building a framework for responsible AI use in your organization.</p>
-    </div>
+    <div class="remember"><h4>Remember</h4><ul><li>The perfect prompt is easiest to write at the end.</li><li>Test it in a fresh chat before you trust it.</li></ul></div>
   </div>
 </section>
 
-  </main>
-</div>
+</main>
 
-<footer class="site">High-Impact Prompting with ChatGPT. A WTPD workshop led by Josh Stutting. Flat Cap Co. is a fictional company used for practice. What you type here stays in your browser.</footer>
+<!-- ================= 10 TOOLKIT ================= -->
+<section class="toolkit" id="toolkit">
+  <div class="head">
+    <p style="font-family:var(--mono);font-size:13px;color:var(--accent-glow);margin-bottom:16px">10</p>
+    <h2>Your prompt toolkit.</h2>
+    <p>The prompts worth keeping, all in one place. Bookmark this page and come back whenever you start something new.</p>
+  </div>
+  <div class="kit">
+    <div class="kitItem"><h3>Your starting prompt</h3><p class="use">Built from your plan. Use it to restart your task any time.</p>
+<div class="prompt" data-start data-mode="new"></div></div>
+    <div class="kitItem"><h3>Let it interview you</h3><p class="use">When you're not sure what context matters.</p>
+<div class="prompt" data-mode="new">I need help with this: [describe your task]. When this is finished, [who] will be able to [what]. Before you write anything, ask me the five questions whose answers would most change the result. Ask one at a time and wait for my answer.</div></div>
+    <div class="kitItem"><h3>Surface hidden decisions</h3><p class="use">When the answer feels generic.</p>
+<div class="prompt" data-mode="same">What assumptions are you making? List every decision you made for me that I didn't specify.</div></div>
+    <div class="kitItem"><h3>Escape the first default</h3><p class="use">When you want real options, not variations.</p>
+<div class="prompt" data-mode="same">Give me three genuinely different approaches. For each, tell me what it's best for and what it gives up.</div></div>
+    <div class="kitItem"><h3>Check the route</h3><p class="use">Before you call anything finished.</p>
+<div class="prompt" data-mode="same">Critique this against the goal we established. What would still make it fail?</div></div>
+    <div class="kitItem"><h3>Start fresh</h3><p class="use">When the conversation starts to feel off.</p>
+<div class="prompt" data-mode="same">Summarize what we've decided so far: the goal, the decisions we've locked in, the context that matters, and what's still open. Write it so I can paste it into a brand-new conversation and pick up exactly where we left off.</div></div>
+    <div class="kitItem"><h3>Stick to my sources</h3><p class="use">When you're working from your own documents.</p>
+<div class="prompt" data-mode="attach">Using only the files I've attached, answer the following. After each point, quote the line it came from. If the files don't say, tell me instead of guessing.</div></div>
+    <div class="kitItem"><h3>Teach it back</h3><p class="use">After any conversation that worked.</p>
+<div class="prompt" data-mode="same">Review everything we did in this conversation. Write the single prompt that could have produced something close to our final result from the beginning. Then explain which parts of that prompt mattered most and why.</div></div>
+  </div>
+</section>
 
-<button class="taskBtn" type="button" data-open-task aria-controls="drawer"><span>My task</span><span class="meter" aria-hidden="true"><i id="meter"></i></span></button>
+<!-- ================= CLOSING ================= -->
+<section class="closing" aria-label="Closing">
+  <div class="model7" aria-label="The model"><span>Destination</span><i></i><span>Decisions</span><i></i><span>Context</span><i></i><span>Cascade</span><i></i><span>Workflow</span><i></i><span>System</span><i></i><span>Product</span></div>
+  <p class="north">High-impact prompting isn't the art of finding magic words. It's knowing the outcome you want, keeping the decisions that matter, giving AI the context it needs, and steering until you get there. <em>AI can help find the route. You own the destination.</em></p>
+  <div class="ctas"><button class="btn" type="button" data-print>Print or save my plan</button><a class="btn ghost" href="handout.html">Open the handout</a></div>
+  <div class="nextClass">
+    <p class="k">Next session</p>
+    <div><h3>Advanced Prompts for Business Success</h3><p>Tuesday, December 8, 8:30 to 10:30 AM, Room A107. Microsoft Copilot, prompts for core business challenges, more AI tools, and a framework for responsible AI use in your organization.</p></div>
+  </div>
+</section>
+
+<footer class="site"><div class="in"><span>High-Impact Prompting with ChatGPT. A WTPD workshop led by Josh Stutting.</span><span>Flat Cap Co. is a fictional company used for practice. What you type stays in your browser.</span></div></footer>
+
 <div class="scrim" id="scrim"></div>
-<aside class="drawer" id="drawer" aria-label="My task" aria-hidden="true">
-  <header><h2>My task</h2><button class="x" type="button" id="closeTask" aria-label="Close">×</button></header>
+<aside class="drawer" id="drawer" aria-label="My plan" aria-hidden="true">
+  <header><h2>My plan</h2><button class="x" type="button" id="closeTask" aria-label="Close">×</button></header>
   <div class="scroll"><div class="sum" id="summary"></div></div>
-  <footer><button class="btn small" type="button" data-print>Print or save my plan</button><button class="btn small ghost" type="button" id="copyStart">Copy starting prompt</button><button class="btn small ghost" type="button" id="clearAll">Clear my work</button></footer>
+  <footer><button class="btn small" type="button" data-print>Print or save</button><button class="btn small ghost" type="button" id="copyStart">Copy starting prompt</button><button class="btn small ghost" type="button" id="clearAll">Clear my work</button></footer>
 </aside>
 <div class="toast" id="toast" role="status"></div>
 <div id="printPlan"></div>
