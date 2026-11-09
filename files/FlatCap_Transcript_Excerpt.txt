@@ -1,0 +1,121 @@
+
+Flat Cap Co. – Monday Support + Returns Sync
+Date: April 1, 2025
+Time: 9:02–9:49 AM
+Meeting Lead: Felix (Customer Experience Lead)
+Attendees:
+
+Felix (CX Lead)
+
+Lindsay (Returns Coordinator)
+
+Harold (Support Analyst)
+
+Greta (CX Insights)
+
+Jill (Warehouse Manager)
+
+Marcus (Production Liaison)
+
+Sheila (Product Dev)
+
+Transcript
+Felix: Alright, we’re at nine-oh-two, let’s go ahead and get started. I know Marcus has a hard stop at 9:50. Quick round—can everyone hear me okay?
+
+Marcus: Yup, good here.
+
+Greta: All good.
+
+Harold: Yep, coming through.
+
+Lindsay: Morning, yep.
+
+Jill: (muffled) Yeah, I’m here—sorry, just grabbing my notes.
+
+Sheila: Gotcha.
+
+Felix: Cool. So, I wanted to bring this group together because the last three weekly return logs have looked... off. We’ve had an uptick in returns, but more than that, the reasons for return are super inconsistent. Like, one week it’s “fit issues,” the next it’s “poor structure,” then suddenly we get five that say “felt weird.” It’s not adding up.
+
+Lindsay: Yeah, I was going to say—I noticed that too. It’s like everyone’s describing something different, but there’s a common thread we’re just not seeing yet.
+
+Greta: Exactly. I pulled a sampling of support chats and a few return comments from the portal, and even though they’re worded differently, there’s this recurring thing—like, people say “soft in a bad way,” or “kind of sticky” or “doesn’t hold up.” I wasn’t sure if it was materials, or some new batch thing?
+
+Harold: Yeah, we’ve had customers saying “the hat looks fine but feels... off.” One said it was “squishy at the edge.” I honestly thought it was just people being picky at first.
+
+Marcus: Wait—sticky how? Like, surface sticky or...?
+
+Greta: Like one person said it “grabbed hair.” Another said it felt like it “melted a little” when it was hot out, which sounded dramatic, but I flagged it just in case.
+
+Jill: Okay that’s weird, because—I wasn’t sure if I should bring this up—but I’ve been seeing a few returns where, when I take them out of the polybag, the panels sort of stick to each other. It’s not on all of them. It’s almost like... I don’t know, like something wasn’t cured all the way?
+
+Marcus: (sighs) Ugh. That might actually be connected to the manual pass we did when Line 4 went down mid-March. Remember that, Sheila?
+
+Sheila: Yeah, vaguely—was that the 14th?
+
+Marcus: I think so. It was like two days where we routed some of the glue steps to manual because the applicator head was off calibration. We were way behind and just needed to get things moving again.
+
+Lindsay: Wait, so—are we talking about the inner seams here?
+
+Jill: Mostly, yeah. Where the crown panels meet the band. It’s super subtle, but when you press, there’s this softness. And we’re getting more returns in that window.
+
+Harold: Someone emailed me saying their cap “just fell apart in the sun,” and I literally thought it was a joke. Now it might not be.
+
+Felix: So this is interesting. Because none of our return data explicitly says “glue” or “adhesive,” but everything you’re describing sounds like bonding issues. Or at least not stitching, right?
+
+Greta: Right, but no one’s saying glue. Customers are describing the effects—like “collapsed brim” or “edges curled after wear”—but nothing direct. They don’t know what step it is.
+
+Sheila: And internally we might be missing it too. Like, QA hasn’t flagged anything as a bonding issue. I can double check with Ann, but I think they thought it was a packaging issue from shipping—humidity maybe.
+
+Marcus: If it was manual application, and we had any skips—or worse, overapplication—it wouldn’t show up right away. It’d show up in 2–3 wears. Especially with heat.
+
+Lindsay: Oh, that tracks. Because we’re seeing most of these come back from the warmer states—Florida, Texas, Southern Cali. I didn’t even think about that till just now.
+
+Jill: (quiet laugh) Okay but can I just say—I love when we accidentally do detective work.
+
+Felix: (laughs) Honestly, same. Jill, can you track which batch most of those tacky returns came from?
+
+Jill: Yeah, I’ve got batch tags on the RMA folders. I’ll pull those after this. Gimme a day.
+
+Marcus: I’ll go through the shift logs and see who was on that manual station those days. Might help narrow it down.
+
+Harold: Do we have photos of those returns, or is that just in the physical pile?
+
+Lindsay: Uh, mostly physical, but we can start snapping them before disposal. I’ll talk to the team.
+
+Felix: That would be awesome. Just a front shot and maybe a seam close-up. Doesn’t need to be fancy—just enough for us to spot anything visually off.
+
+Sheila: Can I just throw in one more thing—if we do confirm it’s a bonding issue, we should flag this in the build notes so it doesn’t get missed in next month’s rollout. I know we’re onboarding a new machine for summer styles.
+
+Marcus: Oh crap, good call. That machine has a newer temp regulation system. We don’t want to inherit this problem at scale.
+
+Greta: Can we also update the training doc for support? So they have better language to probe for this. Right now they’re just guessing between fit, structure, and “feel.”
+
+Felix: Yes, love that. Greta, can you draft something?
+
+Greta: On it. I’ll mock up a quick diagnostic guide—just something like “ask about texture, heat, break-in, storage”—that kind of thing.
+
+Harold: Oh, also—totally unrelated, but while we’re here—are we still out of XL sizes in the graphite color? We’re getting tickets about that too.
+
+Felix: Uh… yes. We had a hold on that lot pending color fastness testing. That’s still in QA, but I’ll check with them.
+
+Sheila: It’s not failing, right?
+
+Felix: Not failing, just... murky. Looks slightly purple under certain lights. Like, LED showroom lights. You know how picky the reseller accounts can be.
+
+Marcus: Oh man. That again?
+
+Jill: (chuckling) What is this, 2023?
+
+Felix: (laughing) I know. It’s back. Anyway, we’ll tackle that Thursday.
+
+Harold: Alright. I’ll start tagging the weird tickets “panel slip” or something until we know more.
+
+Felix: Perfect. Let’s aim to regroup midweek. Jill, Marcus, and Sheila—if we can get confirmation on process flow from that March run, I think we’re close to isolating this.
+
+Marcus: Sounds good. I’ve got some downtime later today—will start digging.
+
+Jill: Same. I’ll look through the shelf returns this afternoon.
+
+Sheila: I’ll ping Ann right after this.
+
+Felix: Alright, 9:49 on the dot. Appreciate the hustle, everyone. Let’s close this loop before the next promo wave hits.
