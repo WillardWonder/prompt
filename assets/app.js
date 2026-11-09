@@ -28,6 +28,8 @@ function copyText(text,btn,label){
    data-mode="same"   -> Copy only, paste into the chat you're already in
    data-mode="attach" -> Copy and open ChatGPT, attach files first          */
 var CHAT="https://chatgpt.com/";
+var TOUCH=window.matchMedia&&matchMedia("(pointer:coarse)").matches, MAC=/Mac|iPhone|iPad/.test(navigator.platform||navigator.userAgent);
+var PASTE=TOUCH?"Press and hold, then tap Paste":(MAC?"Press ⌘V":"Press Ctrl+V");
 function url(t){return CHAT+"?q="+encodeURIComponent(t)}
 var WHERE={new:"Starts a new chat",same:"A follow-up: copy it, then paste it into the chat you already have open",attach:"Attach the files, then paste"};
 function build(el){
@@ -38,14 +40,19 @@ function build(el){
   var bar=document.createElement("div");bar.className="pbar";bar.innerHTML='<span class="where">'+WHERE[mode]+'</span>';
   if(mode==="new"){var a=document.createElement("a");a.className="pbtn go";a.target="_blank";a.rel="noopener";a.textContent="Open in ChatGPT";a.href=url(text);bar.appendChild(a)}
   if(mode==="attach"){var b=document.createElement("button");b.type="button";b.className="pbtn go";b.textContent="Copy and open ChatGPT";
-    b.addEventListener("click",function(){copyText(t.textContent,null,"");window.open(CHAT,"_blank","noopener");toast("Prompt copied. Attach the files in ChatGPT, then paste.")});bar.appendChild(b)}
+    b.addEventListener("click",function(){copyText(t.textContent,null,"");window.open(CHAT,"_blank","noopener");toast("Copied. Attach the files in ChatGPT, then "+PASTE.charAt(0).toLowerCase()+PASTE.slice(1)+".")});bar.appendChild(b)}
   var c=document.createElement("button");c.type="button";c.className="pbtn";c.textContent="Copy";
-  c.addEventListener("click",function(){copyText(t.textContent,c,"Copy")});bar.appendChild(c);
+  c.addEventListener("click",function(){copyText(t.textContent,c,"Copy").then(function(){toast(mode==="same"?"Copied. "+PASTE+" in the chat you already have open.":"Copied. "+PASTE+" in ChatGPT.")})});bar.appendChild(c);
   el.appendChild(bar);
 }
 function setP(el,text){build(el);el.querySelector(".txt").textContent=text;var a=el.querySelector("a.go");if(a)a.href=url(text)}
 $$(".prompt").forEach(build);
-$$("[data-chip]").forEach(function(b){b.addEventListener("click",function(){copyText(b.getAttribute("data-chip"),null,"").then(function(){toast("Copied. Paste it into the same chat.")})})});
+$$("[data-chip]").forEach(function(b){b.addEventListener("click",function(){copyText(b.getAttribute("data-chip"),null,"").then(function(){toast("Copied. "+PASTE+" in the same chat.")})})});
+
+/* ---------- reading progress ---------- */
+(function(){var b=document.createElement("div");b.className="progress";b.setAttribute("aria-hidden","true");document.body.appendChild(b);
+  var raf;function upd(){raf=0;var h=document.documentElement,m=h.scrollHeight-h.clientHeight;b.style.transform="scaleX("+(m>0?h.scrollTop/m:0)+")"}
+  window.addEventListener("scroll",function(){if(!raf)raf=requestAnimationFrame(upd)},{passive:true});upd()})();
 
 /* ---------- bound fields ---------- */
 $$("[data-k]").forEach(function(el){var k=el.getAttribute("data-k");if(S[k]!=null)el.value=S[k];

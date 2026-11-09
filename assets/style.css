@@ -326,6 +326,11 @@ details.example .in{padding:0 32px 30px}
 footer.site{border-top:1px solid var(--hair);padding:32px 5vw 60px;font-size:14px;color:var(--muted)}
 footer.site .in{max-width:var(--wide);margin:0 auto;display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 #printPlan{display:none}
+.progress{position:fixed;left:0;top:0;height:3px;width:100%;background:var(--accent);transform-origin:0 50%;transform:scaleX(0);z-index:70;pointer-events:none}
+.phoneQR{display:flex;align-items:center;gap:16px;margin-top:34px;max-width:30em}
+.phoneQR img{background:#fff;padding:6px;border-radius:10px;flex:none}
+.phoneQR p{font-size:14.5px;line-height:1.5;color:rgba(255,255,255,.7)}
+.phoneQR strong{color:#fff;font-weight:500;display:block}
 
 /* ================= RESPONSIVE ================= */
 @media (max-width:1000px){
@@ -356,6 +361,20 @@ footer.site .in{max-width:var(--wide);margin:0 auto;display:flex;justify-content
   .nextClass{grid-template-columns:1fr}
   details.example summary{padding:20px;font-size:22px}
   details.example .in{padding:0 16px 20px}
+  .hbar{flex-wrap:wrap;gap:6px}
+  .hbar .who{display:none}
+  .hero h1{font-size:44px}
+  .hero .lede{font-size:18px;margin:22px 0 26px}
+  .ctas{display:grid;gap:10px}
+  .ctas .btn{justify-content:center;text-align:center}
+  .routeArt{display:none}
+  .phoneQR{display:none}
+  .pbar{flex-wrap:wrap;gap:10px}
+  .pbar .where{flex-basis:100%}
+  .pbtn{min-height:46px;padding:12px 20px;font-size:15px;justify-content:center}
+  .pbtn.go{flex:1 1 auto}
+  .seg button,.tally button,.navlist a,.btn.small{min-height:44px}
+  .toast{bottom:18px;font-size:15px;border-radius:16px;padding:14px 18px}
 }
 @media print{
   @page{margin:16mm}
